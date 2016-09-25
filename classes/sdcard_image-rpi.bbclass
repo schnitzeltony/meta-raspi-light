@@ -141,10 +141,6 @@ IMAGE_CMD_rpi-sdimg () {
 		done
 	fi
 
-	# Add stamp file
-	echo "${IMAGE_NAME}" > ${WORKDIR}/image-version-info
-	mcopy -i ${WORKDIR}/boot.img -v ${WORKDIR}/image-version-info ::
-
 	# Burn Partitions
 	dd if=${WORKDIR}/boot.img of=${SDIMG} conv=notrunc seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024) && sync && sync
 	# If SDIMG_ROOTFS_TYPE is a .xz file use xzcat
