@@ -5,15 +5,14 @@ LIC_FILES_CHKSUM = "file://LICENCE.broadcom;md5=4a4d169737c0786fb9482bb6d30401d1
 
 inherit deploy
 
-include recipes-bsp/common/firmware.inc
-
+SRC_URI = "git://github.com/raspberrypi/firmware.git;protocol=git"
+SRCREV = "91c30e0181e1cee0281133d630ebe5e9d4e00615"
+PV = "20160926"
 RDEPENDS_${PN} = "rpi-config"
 
 COMPATIBLE_MACHINE = "raspberrypi"
 
-S = "${RPIFW_S}/boot"
-
-PR = "r3"
+S = "${WORKDIR}/git/boot"
 
 do_deploy() {
     install -d ${DEPLOYDIR}/${PN}
