@@ -112,14 +112,11 @@ do_configure_prepend() {
     kernel_configure_variable LEGACY_PTYS y
 
     # Activate the configuration options for VC4
-    VC4GRAPHICS="${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "1", "0", d)}"
-    if [ ${VC4GRAPHICS} = "1" ]; then
-        kernel_configure_variable I2C_BCM2835 y
-        kernel_configure_variable DRM y
-        kernel_configure_variable DRM_FBDEV_EMULATION y
-        kernel_configure_variable DRM_VC4 y
-        kernel_configure_variable FB_BCM2708 n
-    fi
+    kernel_configure_variable I2C_BCM2835 y
+    kernel_configure_variable DRM y
+    kernel_configure_variable DRM_FBDEV_EMULATION y
+    kernel_configure_variable DRM_VC4 y
+    kernel_configure_variable FB_BCM2708 n
 
     # Keep this the last line
     # Remove all modified configs and add the rest to .config
