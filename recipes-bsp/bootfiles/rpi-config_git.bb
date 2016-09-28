@@ -48,20 +48,6 @@ do_deploy() {
         sed -i '/#over_voltage/ c\over_voltage=${OVER_VOLTAGE}' ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
     fi
 
-    # GPU memory
-    if [ -n "${GPU_MEM}" ]; then
-        sed -i '/#gpu_mem=/ c\gpu_mem=${GPU_MEM}' ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
-    fi
-    if [ -n "${GPU_MEM_256}" ]; then
-        sed -i '/#gpu_mem_256/ c\gpu_mem_256=${GPU_MEM_256}' ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
-    fi
-    if [ -n "${GPU_MEM_512}" ]; then
-        sed -i '/#gpu_mem_512/ c\gpu_mem_512=${GPU_MEM_512}' ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
-    fi
-    if [ -n "${GPU_MEM_1024}" ]; then
-        sed -i '/#gpu_mem_1024/ c\gpu_mem_1024=${GPU_MEM_1024}' ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
-    fi
-
     # Video camera support
     if [ -n "${VIDEO_CAMERA}" ]; then
         echo "# Enable video camera" >>${DEPLOYDIR}/bcm2835-bootfiles/config.txt
