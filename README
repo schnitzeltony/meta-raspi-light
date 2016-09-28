@@ -1,13 +1,3 @@
-Quick links
-===========
-Git repository web frontend:
-    http://git.yoctoproject.org/cgit/cgit.cgi/meta-raspberrypi/
-Mailing list (yocto mailing list):
-    yocto@yoctoproject.org
-Issues management (redmine):
-    http://redmine.gherzan.ro/projects/meta-raspberrypi
-
-
 Contents:
 =========
 1. Description
@@ -44,23 +34,14 @@ Contents:
 1. Description
 ==============
 
-This is the general hardware specific BSP overlay for the RaspberryPi device.
+This is a fork of https://github.com/agherzan/meta-raspberrypi
 
-More information can be found at:
-                   http://www.raspberrypi.org/ (Official Site)
-
-The core BSP part of meta-raspberrypi should work with different
-OpenEmbedded/Yocto distributions and layer stacks, such as:
-* Distro-less (only with OE-Core).
-* Angstrom.
-* Yocto/Poky (main focus of testing).
-
-2. Yocto BSP Layer - RaspberryPi
+2. BSP Layer - RaspberryPi
 ================================
 
 This layer depends on:
 
-URI: git://git.yoctoproject.org/poky
+URI: git://git.openembedded.org/openembedded-core
 branch: master
 revision: HEAD
 
@@ -68,30 +49,6 @@ URI: git://git.openembedded.org/meta-openembedded
 layers: meta-oe, meta-multimedia
 branch: master
 revision: HEAD
-
-2.A. How to use it
-==================
-a. source poky/oe-init-build-env rpi-build
-b. Add needed layer to bblayers.conf:
-    - meta-raspberrypi
-c. Set MACHINE in local.conf to one of the supported boards:
-    - raspberrypi
-    - raspberrypi0
-    - raspberrypi2
-    - raspberrypi3
-d. bitbake rpi-hwup-image
-e. dd to a SD card the generated sdimg file (use xzcat if rpi-sdimg.xz is used)
-f. Boot your RPI.
-
-2.B. Images
--===========
-* rpi-hwup-image
-    Hardware up image
-* rpi-basic-image
-    Based on rpi-hwup-image with some added features (ex: splash)
-* rpi-test-image
-    Image based on rpi-basic-image which includes most of the packages in this
-    layer and some media samples.
 
 3. Optional build configuration
 ===============================
@@ -254,96 +211,14 @@ RaspberryPi3 will have to explicitely set in local.conf: ENABLE_UART = "1".
 Ref.: https://github.com/raspberrypi/firmware/issues/553
       https://github.com/RPi-Distro/repo/issues/22
 
-4. Extra apps
-=============
 
-4.A. omxplayer
-==============
-omxplayer depends on libav which has a commercial license. So in order to be
-able to compile omxplayer you will need to whiteflag the commercial license
-adding to you local.conf:
-LICENSE_FLAGS_WHITELIST = "commercial"
-
-5. Board Configuration
-======================
-
-5.A. Audio Routing
-==================
-To load audio driver
-
-    modprobe snd-bcm2835
-
-To test audio playback
-
-    e.g. aplay test.wav
-
-Note that without HDMI connected this emits audio from the 3.5in jack connector
-as expected. However With an HDMI display connected there is no audio output from
-the jack connector.
-
-To force the audio routing via the 3.5in jack connector use
-
-    amixer cset numid=3 1
-
-Options to amixer cset are:
-
-    0=auto
-    1=headphones
-    2=hdmi
-
-6. Source code and mirrors
-==========================
-
-Main repo:
-    git://git.yoctoproject.org/meta-raspberrypi
-    http://git.yoctoproject.org/git/meta-raspberrypi
-
-Github mirror:
-    https://github.com/agherzan/meta-raspberrypi
-
-Bitbucket mirror:
-    https://bitbucket.org/agherzan/meta-raspberrypi
-
-
-7. Contributing
+4. Contributing
 ===============
 
-7.A. Mailing list
-=================
-The main communication tool we use is a mailing list:
-    yocto@yoctoproject.org
-    https://lists.yoctoproject.org/listinfo/yocto
-
-Feel free to ask any kind of questions but always prepend your email subject
-with "[meta-raspberrypi]". This is because we use the 'yocto' mailing list and
-not a perticular 'meta-raspberrypi' mailing list.
-
-To contribute to this layer you should send the patches for review to the
-above specified mailing list.
-The patches should be compliant with the openembedded patch guidelines:
-http://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines
+Use github pull requests for contributions
 
 
-When creating patches, please use something like:
-
-    git format-patch -s --subject-prefix='meta-raspberrypi][PATCH' origin
-
-When sending patches to mailing list, please use something like:
-
-    git send-email --to yocto@yoctoproject.org <generated patch>
-
-7.B. Github issues
-==================
-In order to manage and trace the meta-raspberrypi issues, we use github issues:
-    https://github.com/agherzan/meta-raspberrypi/issues
-
-If you push patches which have a github issue associated, please provide the
-issue number in the commit log just before "Signed-off-by" line(s). Example line
-for a bug:
-    [Issue #13]
-
-
-8. Maintainers
+5. Maintainers
 ==============
 
-    Andrei Gherzan <andrei at gherzan.ro>
+Layer maintainer: Andreas Müller <schnitzeltony@googlemail.com>
