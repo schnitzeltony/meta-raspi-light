@@ -2,8 +2,6 @@ Contents:
 =========
 1. Description
 2. Yocto BSP Layer - Raspberry Pi
-    2.A. How to use it
-    2.B. Images
 3. Optional build configuration
     3.A. Compressed deployed files
     3.B. Add purchased license codecs
