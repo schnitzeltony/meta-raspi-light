@@ -12,7 +12,7 @@ XSERVER = " \
     xf86-input-evdev \
     xf86-input-mouse \
     xf86-input-keyboard \
-    ${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "xf86-video-modesetting", "xf86-video-fbdev", d)} \
+    xf86-video-modesetting \
     "
 
 # Really supported starting from linux-raspberrypi 3.18.y only
