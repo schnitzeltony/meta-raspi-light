@@ -89,6 +89,12 @@ do_deploy() {
         echo "enable_uart=1" >>${DEPLOYDIR}/bcm2835-bootfiles/config.txt
     fi
 
+    ###########################################################################################################################
+    # unconditionals
+
+    # builtin audio
+    sed -i '/#dtparam=audio/ c\dtparam=audio=on' ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+
     # VC4 Graphics support
     echo "# Enable VC4 Graphics" >> ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
     echo "dtoverlay=vc4-kms-v3d,${VC4_CMA_SIZE}" >> ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
