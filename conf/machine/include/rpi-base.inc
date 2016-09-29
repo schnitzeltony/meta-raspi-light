@@ -15,7 +15,6 @@ XSERVER = " \
     xf86-video-modesetting \
     "
 
-# Really supported starting from linux-raspberrypi 3.18.y only
 KERNEL_DEVICETREE ?= " \
     bcm2708-rpi-b.dtb \
     bcm2708-rpi-b-plus.dtb \
