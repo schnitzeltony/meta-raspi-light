@@ -14,7 +14,8 @@ Contents:
     3.I. Enable SPI bus
     3.J. Enable I2C
     3.K. Enable PiTFT support
-    3.Ä. Enable UART support
+    3.L. Enable UART support
+    3.M. Disable Realtime
 4. Contribution
 5. Maintainers
 
@@ -154,6 +155,13 @@ RaspberryPi3 will have to explicitely set in local.conf: ENABLE_UART = "1".
 
 Ref.: https://github.com/raspberrypi/firmware/issues/553
       https://github.com/RPi-Distro/repo/issues/22
+
+3.M. Disable Realtime
+=====================
+
+By default - if already available - realtime patches and configurations
+are set. To avoid this set in your local.conf:
+ENABLE_RPI_RT = "0"
 
 
 4. Contributing

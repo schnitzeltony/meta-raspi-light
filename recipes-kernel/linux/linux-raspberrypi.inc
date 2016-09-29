@@ -69,6 +69,21 @@ do_configure_prepend() {
     kernel_configure_variable DRM_VC4 y
     kernel_configure_variable FB_BCM2708 n
 
+    # Realtime - for sound
+    if [ ! "${ENABLE_RPI_RT}" = "0" ]; then
+        kernel_configure_variable HZ_1000 y
+        kernel_configure_variable HZ 1000
+        kernel_configure_variable PREEMPT_RCU y
+        kernel_configure_variable PREEMPT y
+        kernel_configure_variable PREEMPT_RT_BASE y
+        kernel_configure_variable PREEMPT_LAZY y
+        kernel_configure_variable PREEMPT_VOLUNTARY n
+        kernel_configure_variable PREEMPT_RT_FULL y
+        kernel_configure_variable PREEMPT_COUNT y
+        kernel_configure_variable DEBUG_PREEMPT n
+        kernel_configure_variable PREEMPT_TRACER n
+    fi
+
     # Keep this the last line
     # Remove all modified configs and add the rest to .config
     sed -e "${CONF_SED_SCRIPT}" < '${WORKDIR}/defconfig' >> '${B}/.config'
