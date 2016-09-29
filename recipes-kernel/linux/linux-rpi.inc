@@ -39,7 +39,7 @@ do_configure_prepend() {
     kernel_configure_variable LOCALVERSION "\"\""
     kernel_configure_variable LOCALVERSION_AUTO n
 
-    if [ ! -z "${KERNEL_INITRAMFS}" ]; then
+    if [ "${INITRAMFS_IMAGE_BUNDLE}" = "1" ]; then
         kernel_configure_variable BLK_DEV_INITRD y
         kernel_configure_variable INITRAMFS_SOURCE ""
         kernel_configure_variable RD_GZIP y

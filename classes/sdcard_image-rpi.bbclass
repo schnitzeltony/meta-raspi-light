@@ -29,9 +29,6 @@ IMAGE_TYPEDEP_rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
 # Set kernel and boot loader
 IMAGE_BOOTLOADER ?= "bcm2835-bootfiles"
 
-# Set initramfs extension
-KERNEL_INITRAMFS ?= ""
-
 # Kernel image name
 SDIMG_KERNELIMAGE_raspberrypi  ?= "kernel.img"
 SDIMG_KERNELIMAGE_raspberrypi2 ?= "kernel7.img"
@@ -126,10 +123,10 @@ IMAGE_CMD_rpi-sdimg () {
 	case "${KERNEL_IMAGETYPE}" in
 	"uImage")
 		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot.bin ::${SDIMG_KERNELIMAGE}
-		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::uImage
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${INITRAMFS_IMAGE}-${MACHINE}.bin ::uImage
 		;;
 	*)
-		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::${SDIMG_KERNELIMAGE}
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${INITRAMFS_IMAGE}-${MACHINE}.bin ::${SDIMG_KERNELIMAGE}
 		;;
 	esac
 
