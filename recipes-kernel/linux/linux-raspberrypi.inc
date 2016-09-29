@@ -69,6 +69,10 @@ do_configure_prepend() {
     kernel_configure_variable DRM_VC4 y
     kernel_configure_variable FB_BCM2708 n
 
+    # Activate onboard sound by default
+    kernel_configure_variable SND y
+    kernel_configure_variable SND_BCM2835 y
+
     # Realtime - for sound
     if [ ! "${ENABLE_RPI_RT}" = "0" ]; then
         kernel_configure_variable HZ_1000 y
