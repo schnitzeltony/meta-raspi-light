@@ -8,11 +8,10 @@ inherit kernel siteinfo
 require recipes-kernel/linux/linux-yocto.inc
 
 # Set the verbosity of kernel messages during runtime
-# You can define CMDLINE_DEBUG in your local.conf or distro.conf to override this behaviour
-CMDLINE_DEBUG ?= '${@base_conditional("DISTRO_TYPE", "release", "quiet", "debug", d)}'
-CMDLINE_append = " ${CMDLINE_DEBUG}"
-
-KERNEL_INITRAMFS ?= '${@base_conditional("INITRAMFS_IMAGE_BUNDLE", "1", "1", "", d)}'
+# shut up
+#CMDLINE_append = " quiet"
+# verbose
+#CMDLINE_append = " debug"
 
 # Set a variable in .configure
 # $1 - Configure variable to be set
@@ -62,8 +61,6 @@ do_configure_prepend() {
         kernel_configure_variable SQUASHFS y
         kernel_configure_variable UBIFS_FS y
     fi
-    # Activate CONFIG_LEGACY_PTYS
-    kernel_configure_variable LEGACY_PTYS y
 
     # Activate the configuration options for VC4
     kernel_configure_variable I2C_BCM2835 y
