@@ -1,5 +1,5 @@
 inherit image_types
-inherit linux-raspberrypi-base
+inherit linux-kernel-base
 
 #
 # Create an image that can by written onto a SD card using dd.
@@ -70,6 +70,18 @@ FATPAYLOAD ?= ""
 
 RPI_KERNEL_VERSION := "${@get_kernelversion_file('${STAGING_KERNEL_BUILDDIR}')}"
 
+def split_overlays(d, ver, out):
+    dts = dts = d.getVar("KERNEL_DEVICETREE", True)
+    if out:
+        overlays = oe.utils.str_filter_out('\S+\-overlay\.dtb$', dts, d)
+        overlays = oe.utils.str_filter_out('\S+\.dtbo$', overlays, d)
+    else:
+        overlays = oe.utils.str_filter('\S+\-overlay\.dtb$', dts, d) + \
+                   " " + oe.utils.str_filter('\S+\.dtbo$', dts, d)
+
+    return overlays
+
+
 IMAGE_CMD_rpi-sdimg () {
 
 	# Align partitions
@@ -78,9 +90,6 @@ IMAGE_CMD_rpi-sdimg () {
 	SDIMG_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + $ROOTFS_SIZE)
 
 	echo "Creating filesystem with Boot partition ${BOOT_SPACE_ALIGNED} KiB and RootFS $ROOTFS_SIZE KiB"
-
-	# Check if we are building with device tree support
-	DTS="${@get_dts(d, '${RPI_KERNEL_VERSION}')}"
 
 	# Initialize sdcard image file
 	dd if=/dev/zero of=${SDIMG} bs=1024 count=0 seek=${SDIMG_SIZE}
@@ -99,27 +108,27 @@ IMAGE_CMD_rpi-sdimg () {
 	rm -f ${WORKDIR}/boot.img
 	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
 	mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles/* ::/
-	if test -n "${DTS}"; then
-		# Device Tree Overlays are assumed to be suffixed by '-overlay.dtb' (4.1.x) or by '.dtbo' (4.4.9+) string and will be put in a dedicated folder
-		DT_OVERLAYS="${@split_overlays(d, '${RPI_KERNEL_VERSION}', 0)}"
-		DT_ROOT="${@split_overlays(d, '${RPI_KERNEL_VERSION}', 1)}"
 
-		# Copy board device trees to root folder
-		for DTB in ${DT_ROOT}; do
-			DTB_BASE_NAME=`basename ${DTB} .dtb`
+	# Device Tree Overlays are assumed to be suffixed by '-overlay.dtb' (4.1.x) or by '.dtbo' (4.4.9+) string and will be put in a dedicated folder
+	DT_OVERLAYS="${@split_overlays(d, '${RPI_KERNEL_VERSION}', 0)}"
+	DT_ROOT="${@split_overlays(d, '${RPI_KERNEL_VERSION}', 1)}"
 
-			mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${DTB_BASE_NAME}.dtb ::${DTB_BASE_NAME}.dtb
-		done
+	# Copy board device trees to root folder
+	for DTB in ${DT_ROOT}; do
+		DTB_BASE_NAME=`basename ${DTB} .dtb`
 
-		# Copy device tree overlays to dedicated folder
-		mmd -i ${WORKDIR}/boot.img overlays
-		for DTB in ${DT_OVERLAYS}; do
-				DTB_EXT=${DTB##*.}
-				DTB_BASE_NAME=`basename ${DTB} ."${DTB_EXT}"`
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${DTB_BASE_NAME}.dtb ::${DTB_BASE_NAME}.dtb
+	done
 
-			mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${DTB_BASE_NAME}.${DTB_EXT} ::overlays/${DTB_BASE_NAME}.${DTB_EXT}
-		done
-	fi
+	# Copy device tree overlays to dedicated folder
+	mmd -i ${WORKDIR}/boot.img overlays
+	for DTB in ${DT_OVERLAYS}; do
+			DTB_EXT=${DTB##*.}
+			DTB_BASE_NAME=`basename ${DTB} ."${DTB_EXT}"`
+
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${DTB_BASE_NAME}.${DTB_EXT} ::overlays/${DTB_BASE_NAME}.${DTB_EXT}
+	done
+
 	case "${KERNEL_IMAGETYPE}" in
 	"uImage")
 		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot.bin ::${SDIMG_KERNELIMAGE}
