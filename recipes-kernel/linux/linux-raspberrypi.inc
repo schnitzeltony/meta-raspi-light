@@ -73,10 +73,8 @@ do_configure_prepend() {
     kernel_configure_variable SND y
     kernel_configure_variable SND_BCM2835 y
 
-    # Realtime - for sound
-    if [ ! "${ENABLE_RPI_RT}" = "0" ]; then
-        kernel_configure_variable HZ_1000 y
-        kernel_configure_variable HZ 1000
+    # Realtime
+    if [ "${ENABLE_RPI_RT}" = "1" ]; then
         kernel_configure_variable PREEMPT_RCU y
         kernel_configure_variable PREEMPT y
         kernel_configure_variable PREEMPT_RT_BASE y
