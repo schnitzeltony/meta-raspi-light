@@ -73,6 +73,10 @@ do_configure_prepend() {
     kernel_configure_variable SND y
     kernel_configure_variable SND_BCM2835 y
 
+    # 500Hz timers
+    kernel_configure_variable HZ_500 y
+    kernel_configure_variable HZ 500
+
     # Realtime
     if [ "${ENABLE_RPI_RT}" = "1" ]; then
         kernel_configure_variable PREEMPT_RCU y
