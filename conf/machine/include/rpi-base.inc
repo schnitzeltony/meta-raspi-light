@@ -9,6 +9,7 @@ IMAGE_FSTYPES ?= "ext4 rpi-sdimg"
 
 XSERVER = " \
     xserver-xorg \
+    xserver-xorg-extension-glx \
     xf86-input-evdev \
     xf86-input-mouse \
     xf86-input-keyboard \
