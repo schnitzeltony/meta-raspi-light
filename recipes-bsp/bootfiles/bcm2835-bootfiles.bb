@@ -6,8 +6,8 @@ LIC_FILES_CHKSUM = "file://LICENCE.broadcom;md5=4a4d169737c0786fb9482bb6d30401d1
 inherit deploy
 
 SRC_URI = "git://github.com/raspberrypi/firmware.git;protocol=git"
-SRCREV = "6d45dcf869688163fa1c745cb059b14baf61b8fd"
-PV = "20161211"
+SRCREV = "2190ebaaab17d690fb4a6aa767ff7755eaf51b12"
+PV = "20161216"
 RDEPENDS_${PN} = "rpi-config"
 
 COMPATIBLE_MACHINE = "raspberrypi"
