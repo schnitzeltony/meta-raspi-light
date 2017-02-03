@@ -31,7 +31,7 @@ do_install() {
 
     # systemd
     install -d ${D}${systemd_system_unitdir}
-    ln -sf /opt/teamviewer/tv_bin/script/teamviewerd.service ${D}${systemd_system_unitdir}/teamviewerd.service
+    mv ${D}/opt/teamviewer/tv_bin/script/teamviewerd.service ${D}${systemd_system_unitdir}/teamviewerd.service
 
     # desktop+icon
     install -d ${D}${datadir}/applications
@@ -40,7 +40,7 @@ do_install() {
     ln -sf /opt/teamviewer/tv_bin/desktop/teamviewer.png ${D}${datadir}/icons/hicolor/48x48/apps/teamviewer.png
 }
 
-SYSTEMD_SERVICE = "teamviewerd.service"
+SYSTEMD_SERVICE_${PN} = "teamviewerd.service"
 
 FILES_${PN} += " \
     opt \
