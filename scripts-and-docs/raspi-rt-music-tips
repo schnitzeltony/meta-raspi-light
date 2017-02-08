@@ -1,0 +1,13 @@
+Howto reduce Jack XRUN when playing low latency MIDI Music
+
+* cpu frequency governor performance:
+    sudo cpufreq-set -g performance
+
+* systemd/journald storage to RAM: 
+    /etc/systemdjournald.conf: Storage=volatile
+
+* RT kernel setup /etc/limits.d(95-audio-teaks.conf (see meta-misc/audio-tweaks)
+
+* Avoid autostart of pulseaudio (Session/Autostart)
+
+
