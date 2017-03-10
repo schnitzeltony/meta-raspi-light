@@ -25,7 +25,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
 ===================================================================
 --- kernel-source.orig/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
 +++ kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
-@@ -1413,12 +1413,10 @@ static void assign_and_init_hc(dwc_otg_h
+@@ -1420,12 +1420,10 @@ static void assign_and_init_hc(dwc_otg_hcd_t * hcd, dwc_otg_qh_t * qh)
  
  	dwc_otg_hc_init(hcd->core_if, hc);
  
@@ -42,7 +42,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  
  	/* Enable the top level host channel interrupt. */
  	intr_enable = (1 << hc->hc_num);
-@@ -1428,10 +1426,10 @@ static void assign_and_init_hc(dwc_otg_h
+@@ -1435,10 +1433,10 @@ static void assign_and_init_hc(dwc_otg_hcd_t * hcd, dwc_otg_qh_t * qh)
  	gintmsk.b.hcintr = 1;
  	DWC_MODIFY_REG32(&hcd->core_if->core_global_regs->gintmsk, 0, gintmsk.d32);
  
@@ -54,10 +54,10 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
 +		fiq_fsm_spin_unlock_irqrestore(&hcd->fiq_state->lock, flags);
 +	else
 +		local_irq_restore(flags);
- 	
+ 
  	local_irq_restore(flags);
  	hc->qh = qh;
-@@ -1611,6 +1609,7 @@ int fiq_fsm_queue_isoc_transaction(dwc_o
+@@ -1618,6 +1616,7 @@ int fiq_fsm_queue_isoc_transaction(dwc_otg_hcd_t *hcd, dwc_otg_qh_t *qh)
  	int xfer_len, nrpackets;
  	hcdma_data_t hcdma;
  	hfnum_data_t hfnum;
@@ -65,7 +65,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  
  	if (st->fsm != FIQ_PASSTHROUGH)
  		return 0;
-@@ -1686,8 +1685,7 @@ int fiq_fsm_queue_isoc_transaction(dwc_o
+@@ -1693,8 +1692,7 @@ int fiq_fsm_queue_isoc_transaction(dwc_otg_hcd_t *hcd, dwc_otg_qh_t *qh)
  	fiq_print(FIQDBG_INT, hcd->fiq_state, "%08x", st->hctsiz_copy.d32);
  	fiq_print(FIQDBG_INT, hcd->fiq_state, "%08x", st->hcdma_copy.d32);
  	hfnum.d32 = DWC_READ_REG32(&hcd->core_if->host_if->host_global_regs->hfnum);
@@ -75,7 +75,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  	DWC_WRITE_REG32(&hc_regs->hctsiz, st->hctsiz_copy.d32);
  	DWC_WRITE_REG32(&hc_regs->hcsplt, st->hcsplt_copy.d32);
  	DWC_WRITE_REG32(&hc_regs->hcdma, st->hcdma_copy.d32);
-@@ -1707,8 +1705,7 @@ int fiq_fsm_queue_isoc_transaction(dwc_o
+@@ -1714,8 +1712,7 @@ int fiq_fsm_queue_isoc_transaction(dwc_otg_hcd_t *hcd, dwc_otg_qh_t *qh)
  	}
  	mb();
  	st->hcchar_copy.b.chen = 0;
@@ -85,7 +85,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  	return 0;
  }
  
-@@ -1734,6 +1731,7 @@ int fiq_fsm_queue_split_transaction(dwc_
+@@ -1741,6 +1738,7 @@ int fiq_fsm_queue_split_transaction(dwc_otg_hcd_t *hcd, dwc_otg_qh_t *qh)
  	/* Program HC registers, setup FIQ_state, examine FIQ if periodic, start transfer (not if uframe 5) */
  	int hub_addr, port_addr, frame, uframe;
  	struct fiq_channel_state *st = &hcd->fiq_state->channel[hc->hc_num];
@@ -93,7 +93,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  
  	if (st->fsm != FIQ_PASSTHROUGH)
  		return 0;
-@@ -1842,8 +1840,7 @@ int fiq_fsm_queue_split_transaction(dwc_
+@@ -1849,8 +1847,7 @@ int fiq_fsm_queue_split_transaction(dwc_otg_hcd_t *hcd, dwc_otg_qh_t *qh)
  	DWC_WRITE_REG32(&hc_regs->hcchar, st->hcchar_copy.d32);
  	DWC_WRITE_REG32(&hc_regs->hcintmsk, st->hcintmsk_copy.d32);
  
@@ -103,7 +103,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  
  	if (hc->ep_type & 0x1) {
  		hfnum.d32 = DWC_READ_REG32(&hcd->core_if->host_if->host_global_regs->hfnum);
-@@ -1942,8 +1939,7 @@ int fiq_fsm_queue_split_transaction(dwc_
+@@ -1949,8 +1946,7 @@ int fiq_fsm_queue_split_transaction(dwc_otg_hcd_t *hcd, dwc_otg_qh_t *qh)
  		DWC_WRITE_REG32(&hc_regs->hcchar, st->hcchar_copy.d32);
  	}
  	mb();
@@ -113,7 +113,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  	return 0;
  }
  
-@@ -2437,6 +2433,7 @@ static void process_non_periodic_channel
+@@ -2444,6 +2440,7 @@ static void process_non_periodic_channels(dwc_otg_hcd_t * hcd)
  void dwc_otg_hcd_queue_transactions(dwc_otg_hcd_t * hcd,
  				    dwc_otg_transaction_type_e tr_type)
  {
@@ -121,7 +121,7 @@ Index: kernel-source/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
  #ifdef DEBUG_SOF
  	DWC_DEBUGPL(DBG_HCD, "Queue Transactions\n");
  #endif
-@@ -2462,11 +2459,9 @@ void dwc_otg_hcd_queue_transactions(dwc_
+@@ -2469,11 +2466,9 @@ void dwc_otg_hcd_queue_transactions(dwc_otg_hcd_t * hcd,
  			gintmsk.b.nptxfempty = 1;
  
  			if (fiq_enable) {
