@@ -18,6 +18,8 @@ KERNEL_DEVICETREE ?= " \
     bcm2708-rpi-b-plus.dtb \
     bcm2709-rpi-2-b.dtb \
     bcm2710-rpi-3-b.dtb \
+    bcm2708-rpi-cm.dtb \
+    bcm2710-rpi-cm3.dtb \
     \
     overlays/hifiberry-amp.dtbo \
     overlays/hifiberry-dac.dtbo \
