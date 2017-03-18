@@ -1,10 +1,11 @@
+# Audioinjector sound
+set dtoverlay=audioinjector-soundcard
+
 # Hifiberry Sound
 dtoverlay=hifiberry-dacplus
 
-
 # Enable VC4 Graphics
 dtoverlay=vc4-kms-v3d,cma-256
-
 
 # Help some monitors / others don't work
 hdmi_ignore_edid=0xa5000080
