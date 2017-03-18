@@ -21,6 +21,7 @@ KERNEL_DEVICETREE ?= " \
     bcm2708-rpi-cm.dtb \
     bcm2710-rpi-cm3.dtb \
     \
+    overlays/audioinjector-wm8731-audio.dtbo \
     overlays/hifiberry-amp.dtbo \
     overlays/hifiberry-dac.dtbo \
     overlays/hifiberry-dacplus.dtbo \
