@@ -5,17 +5,17 @@ LIC_FILES_CHKSUM = "file://LICENCE.broadcom;md5=4a4d169737c0786fb9482bb6d30401d1
 
 inherit deploy
 
-PV = "20170303"
+PV = "20170318"
 
-SRC_URI = "https://github.com/raspberrypi/firmware/archive/1.${PV}.tar.gz"
-SRC_URI[md5sum] = "c87bc1bffbb8f254fc739e34baa03b02"
-SRC_URI[sha256sum] = "ee8758d7e63c8fea7c8b7b476ff1c09f9591c74349b7751036a78ae5b88eca36"
+SRC_URI = "https://github.com/schnitzeltony/firmware/archive/schnitzel-${PV}.tar.gz"
+SRC_URI[md5sum] = "bda74e41c8c6ce750b7dc16646477316"
+SRC_URI[sha256sum] = "bf222bf09868bf10bf58105049e87a9024bd1abe1ea2b88946a0ed333efaca9c"
 
 RDEPENDS_${PN} = "rpi-config"
 
 COMPATIBLE_MACHINE = "raspberrypi"
 
-S = "${WORKDIR}/firmware-1.${PV}/boot"
+S = "${WORKDIR}/firmware-schnitzel-${PV}/boot"
 
 do_deploy() {
     install -d ${DEPLOYDIR}/${PN}
