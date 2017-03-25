@@ -1,5 +1,5 @@
 # Audioinjector sound
-set dtoverlay=audioinjector-soundcard
+dtoverlay=audioinjector-wm8731-audio
 
 # Hifiberry Sound
 dtoverlay=hifiberry-dacplus
