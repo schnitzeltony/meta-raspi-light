@@ -1,0 +1,37 @@
+From 644864fc980354055d5ff53239172486b31db80b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 7 Apr 2017 18:33:22 +0200
+Subject: [PATCH] Avoid Oops in rpi_touchscreen_dsi_probe by checking for 
+ bridge_i2c==NULL
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fixes https://github.com/raspberrypi/linux/issues/1948
+
+Upstream-Status: Submitted [1]
+
+[1] https://github.com/raspberrypi/linux/pull/1953
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+index 7f315f0..5a9ea59 100644
+--- a/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
++++ b/drivers/gpu/drm/panel/panel-raspberrypi-touchscreen.c
+@@ -428,6 +428,9 @@ static int rpi_touchscreen_dsi_probe(struct mipi_dsi_device *dsi)
+ 
+ 	ts->bridge_i2c =
+ 		rpi_touchscreen_get_i2c(dev, "raspberrypi,touchscreen-bridge");
++	if (!ts->bridge_i2c)
++		return -ENODEV;
++
+ 	if (IS_ERR(ts->bridge_i2c)) {
+ 		ret = -EPROBE_DEFER;
+ 		return ret;
+-- 
+2.9.3
+
