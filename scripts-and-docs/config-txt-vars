@@ -8,7 +8,7 @@ dtoverlay=hifiberry-dacplus
 dtoverlay=vc4-kms-v3d,cma-256
 
 # Force serial console for Pi3
-enable_uart=1
+dtoverlay=pi3-disable-bt
 
 # Help some monitors / others don't work
 hdmi_ignore_edid=0xa5000080
