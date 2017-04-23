@@ -3491,7 +3491,7 @@ index d2ef51ca9cf4..05e749736560 100644
  	return meta;
  
  out_error:
-@@ -575,28 +577,28 @@ static int zram_decompress_page(struct zram *zram, char *mem, u32 index)
+@@ -575,28 +575,28 @@ static int zram_decompress_page(struct zram *zram, char *mem, u32 index)
  	struct zram_meta *meta = zram->meta;
  	unsigned long handle;
  	unsigned int size;
@@ -3505,14 +3505,14 @@ index d2ef51ca9cf4..05e749736560 100644
  	if (!handle || zram_test_flag(meta, index, ZRAM_ZERO)) {
 -		bit_spin_unlock(ZRAM_ACCESS, &meta->table[index].value);
 +		zram_unlock_table(&meta->table[index]);
- 		clear_page(mem);
+ 		memset(mem, 0, PAGE_SIZE);
  		return 0;
  	}
  
 +	zstrm = zcomp_stream_get(zram->comp);
  	cmem = zs_map_object(meta->mem_pool, handle, ZS_MM_RO);
  	if (size == PAGE_SIZE) {
- 		copy_page(mem, cmem);
+ 		memcpy(mem, cmem, PAGE_SIZE);
  	} else {
 -		struct zcomp_strm *zstrm = zcomp_stream_get(zram->comp);
 -
