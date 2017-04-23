@@ -10,4 +10,4 @@ Howto reduce Jack XRUN when playing low latency MIDI Music
 
 * Avoid autostart of pulseaudio (Session/Autostart)
 
-
+* Pi3: Disable Wifi (dtoverlay=pi3-disable-wifi)
