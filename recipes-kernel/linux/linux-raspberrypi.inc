@@ -77,12 +77,10 @@ do_configure_prepend() {
     kernel_configure_variable HZ_500 y
     kernel_configure_variable HZ 500
 
-    # CPU freq governor ondemand
+    # CPU freq governor defaults
     kernel_configure_variable CPU_FREQ_DEFAULT_GOV_POWERSAVE n
     kernel_configure_variable CPU_FREQ_DEFAULT_GOV_CONSERVATIVE n
     kernel_configure_variable CPU_FREQ_DEFAULT_GOV_USERSPACE n
-    kernel_configure_variable CPU_FREQ_DEFAULT_GOV_PERFORMANCE n
-    kernel_configure_variable CPU_FREQ_DEFAULT_GOV_ONDEMAND y
 
     # Realtime
     if [ "${ENABLE_RPI_RT}" = "1" ]; then
@@ -95,6 +93,13 @@ do_configure_prepend() {
         kernel_configure_variable PREEMPT_COUNT y
         kernel_configure_variable DEBUG_PREEMPT n
         kernel_configure_variable PREEMPT_TRACER n
+        # RT-Kernel: governor performance
+        kernel_configure_variable CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
+        kernel_configure_variable CPU_FREQ_DEFAULT_GOV_ONDEMAND n
+    else
+        # governor ondemand
+        kernel_configure_variable CPU_FREQ_DEFAULT_GOV_PERFORMANCE n
+        kernel_configure_variable CPU_FREQ_DEFAULT_GOV_ONDEMAND y
     fi
 
     # Keep this the last line
