@@ -1,8 +1,8 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
-LINUX_VERSION ?= "4.9.26"
+LINUX_VERSION ?= "4.9.27"
 
-SRCREV = "e1a6b0c255dd15be4d32eb4ce1d9301b7c44d7b9"
+SRCREV = "9a5f215eda12bad29b35040dff00d0346fe517e2"
 SRC_URI = " \
     git://github.com/raspberrypi/linux.git;protocol=git;branch=rpi-4.9.y \
     file://0001-build-arm64-Add-rules-for-.dtbo-files-for-dts-overla.patch \
