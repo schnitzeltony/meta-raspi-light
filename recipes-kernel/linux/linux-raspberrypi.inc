@@ -25,6 +25,9 @@ CMDLINE_append = ' ${@base_conditional("ENABLE_KGDB", "1", "kgdboc=serial0,11520
 # verbose
 #CMDLINE_append = " debug"
 
+# Avoid screen auto switch off
+CMDLINE_append = " consoleblank=0"
+
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
 
 # Set a variable in .configure
