@@ -4,6 +4,9 @@ dtoverlay=audioinjector-wm8731-audio
 # Hifiberry Sound
 dtoverlay=hifiberry-dacplus
 
+# Onboard sound fallback
+#dtparam=audio=on
+
 # Enable VC4 Graphics
 dtoverlay=vc4-kms-v3d,cma-256
 
