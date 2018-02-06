@@ -17,4 +17,4 @@ dtoverlay=pi3-disable-bt
 dtoverlay=pi3-disable-wifi
 
 # Help some monitors / others don't work
-hdmi_ignore_edid=0xa5000080
+#hdmi_ignore_edid=0xa5000080
