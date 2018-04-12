@@ -1,8 +1,8 @@
 # Audioinjector sound
-dtoverlay=audioinjector-wm8731-audio
+#dtoverlay=audioinjector-wm8731-audio
 
 # Hifiberry Sound
-dtoverlay=hifiberry-dacplus
+#dtoverlay=hifiberry-dacplus
 
 # Onboard sound fallback
 #dtparam=audio=on
