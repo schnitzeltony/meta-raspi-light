@@ -10,7 +10,9 @@ S = "${WORKDIR}/git"
 
 PR = "r5"
 
-inherit deploy siteinfo
+INHIBIT_DEFAULT_DEPS = "1"
+
+inherit deploy siteinfo nopackages
 
 do_deploy() {
     install -d ${DEPLOYDIR}/bcm2835-bootfiles
