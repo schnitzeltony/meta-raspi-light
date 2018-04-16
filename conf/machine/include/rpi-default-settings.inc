@@ -2,4 +2,4 @@
 
 IMAGE_CLASSES += "sdcard_image-rpi"
 
-MACHINE_EXTRA_RRECOMMENDS += "udev-udisks-rules-rpi"
+MACHINE_EXTRA_RRECOMMENDS += "udev-rules-rpi udev-rules-udisks-rpi"
