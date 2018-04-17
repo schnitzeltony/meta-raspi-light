@@ -11,3 +11,24 @@ Howto reduce Jack XRUN when playing low latency MIDI Music
 * Avoid autostart of pulseaudio (Session/Autostart)
 
 * Pi3: Disable Wifi (dtoverlay=pi3-disable-wifi)
+
+
+
+Setup new music image:
+
+REMOVE NETWORK PLUG FIRST
+
+root:
+* /etc/sddm.conf
+* /etc/systemd/journald.conf
+* rm /var/log/journal
+* systemctl disable brcm43438.service
+* systemctl disable serial-getty@ttyS0.service
+* audioinjector: mixer / alsactl store
+* passwd
+
+user
+* jack
+* datetime: timezone
+* fluid-dssi
+* qtractor...
