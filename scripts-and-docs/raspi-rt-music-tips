@@ -24,11 +24,19 @@ root:
 * rm /var/log/journal
 * systemctl disable brcm43438.service
 * systemctl disable serial-getty@ttyS0.service
-* audioinjector: mixer / alsactl store
+* in /usr/share/alsa/alsa.conf: Entries (check soundcards with aplay -L)
+  * defaults.ctl.card 0 -> defaults.ctl.!card "sndrpihifiberry"
+  * defaults.pcm.card 0 -> defaults.pcm.!card "sndrpihifiberry"
+* rm /usr/share/alsa/alsa.conf.d/*
+* audioinjector: mixer control / alsactl store
 * passwd
 
 user
-* jack
+* passwd
+* restart
+* network plug
 * datetime: timezone
-* fluid-dssi
+* jack
 * qtractor...
+* fluid-dssi
+
