@@ -113,11 +113,16 @@ do_configure_prepend() {
 }
 
 do_deploy_append() {
-    # Deploy cmdline.txt
+    # Modify cmdline.txt
     install -d ${DEPLOYDIR}/bcm2835-bootfiles
     PITFT="${@bb.utils.contains("MACHINE_FEATURES", "pitft", "1", "0", d)}"
     if [ ${PITFT} = "1" ]; then
         PITFT_PARAMS="fbcon=map:10 fbcon=font:VGA8x8"
     fi
     echo "${CMDLINE}${PITFT_PARAMS}" > ${DEPLOYDIR}/bcm2835-bootfiles/cmdline.txt
+
+    # deploy kernel images with version for card-kernel-wtite.sh
+    for type in ${KERNEL_IMAGETYPES} ; do
+        cp ${KERNEL_OUTPUT_DIR}/${type} ${DEPLOYDIR}/${type}-${KERNEL_VERSION}
+    done
 }
