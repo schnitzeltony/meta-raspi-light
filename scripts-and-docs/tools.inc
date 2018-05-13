@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # tools.inc
-# (c) Copyright 2013-2016 Andreas Müller <schnitzeltony@googlemail.com>
+# (c) Copyright 2013-2018 Andreas Müller <schnitzeltony@gmail.com>
 # Licensed under terms of GPLv2
 #
 # This script contains some helper functions and can be sourced by other 
@@ -10,6 +10,7 @@
 
 # default settings
 DEFAULT_MACHINE='raspberrypi*'
+DEFAULT_KERNEL_IMAGE_TYPE=Image
 
 # SelectCardDevice() creates a dialog to select one of all available removable
 # devices. The path to the selected device is stored in the variale DevicePath.
