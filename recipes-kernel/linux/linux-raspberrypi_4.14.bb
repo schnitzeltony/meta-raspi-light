@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
-LINUX_VERSION = "${@oe.utils.conditional("ENABLE_RPI_RT", "1", "4.14.39", "4.14.39", d)}"
-SRCREV = "${@oe.utils.conditional("ENABLE_RPI_RT", "1", "a4b8f1f27a61d6c98a4819a011c0a99f2d7ebfa8", "30eb4e1033a35103f27d60ba609eb466513b5465", d)}"
+LINUX_VERSION = "${@oe.utils.conditional("ENABLE_RPI_RT", "1", "4.14.43", "4.14.44", d)}"
+SRCREV = "${@oe.utils.conditional("ENABLE_RPI_RT", "1", "d0c9c01733028354529b8132f7ae8f0c2bc5a8c2", "e3e047e02089bf95d28e1c8e2477e22752bed52e", d)}"
 BRANCH = "${@oe.utils.conditional("ENABLE_RPI_RT", "1", "rpi-4.14.y-rt", "rpi-4.14.y", d)}"
 
 SRC_URI = " \
