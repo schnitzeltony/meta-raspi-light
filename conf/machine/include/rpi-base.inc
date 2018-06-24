@@ -14,6 +14,7 @@ XSERVER = " \
     "
 
 KERNEL_DEVICETREE ?= " \
+    bcm2708-rpi-0-w.dtb \
     bcm2708-rpi-b.dtb \
     bcm2708-rpi-b-plus.dtb \
     bcm2709-rpi-2-b.dtb \
@@ -23,6 +24,7 @@ KERNEL_DEVICETREE ?= " \
     bcm2710-rpi-cm3.dtb \
     \
     overlays/audioinjector-wm8731-audio.dtbo \
+    overlays/dwc2.dtbo \
     overlays/hifiberry-amp.dtbo \
     overlays/hifiberry-dac.dtbo \
     overlays/hifiberry-dacplus.dtbo \
@@ -33,6 +35,7 @@ KERNEL_DEVICETREE ?= " \
     overlays/lirc-rpi.dtbo \
     overlays/pitft22.dtbo \
     overlays/pitft28-resistive.dtbo \
+    overlays/pitft35-resistive.dtbo \
     overlays/pps-gpio.dtbo \
     overlays/rpi-ft5406.dtbo \
     overlays/w1-gpio.dtbo \
@@ -42,6 +45,7 @@ KERNEL_DEVICETREE ?= " \
     overlays/pi3-miniuart-bt.dtbo \
     overlays/vc4-kms-v3d.dtbo \
     overlays/vc4-fkms-v3d.dtbo \
+    overlays/at86rf233.dtbo \
     "
 KERNEL_IMAGETYPE ?= "Image"
 
@@ -59,4 +63,4 @@ IMAGE_BOOT_FILES ?= "bcm2835-bootfiles/* ${KERNEL_IMAGETYPE};${SDIMG_KERNELIMAGE
 
 # The kernel image is installed into the FAT32 boot partition and does not need
 # to also be installed into the rootfs.
-RDEPENDS_kernel-base = ""
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base = ""
