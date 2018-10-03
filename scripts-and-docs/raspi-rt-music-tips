@@ -24,6 +24,7 @@ root:
 * rm /var/log/journal
 * systemctl disable brcm43438.service
 * systemctl disable serial-getty@ttyS0.service
+* systemctl disable serial-getty@ttyAMA0.service
 * in /usr/share/alsa/alsa.conf: Entries (check soundcards with aplay -L)
   * defaults.ctl.card 0 -> defaults.ctl.!card "sndrpihifiberry"
   * defaults.pcm.card 0 -> defaults.pcm.!card "sndrpihifiberry"
@@ -35,6 +36,7 @@ user
 * passwd
 * restart
 * network plug
+* check journalctl output
 * datetime: timezone
 * jack
 * qtractor...
