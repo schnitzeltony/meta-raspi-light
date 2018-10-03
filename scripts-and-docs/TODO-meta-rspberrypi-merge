@@ -1,6 +1,5 @@
 * rt kernel
 * qtbase gl/gles overridable
-* move scrips and docs to meta-misc
 * aarch64: get devicetree overlays / cm3 back
 * rt-kernel: governor performance
 
