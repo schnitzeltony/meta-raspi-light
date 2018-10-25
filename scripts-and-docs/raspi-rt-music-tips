@@ -35,10 +35,13 @@ root:
 user
 * passwd
 * restart
+* check session autostart (blueman..)
+* think about reducing screen resolution
 * network plug
 * check journalctl output
 * datetime: timezone
 * jack
 * qtractor...
 * fluid-dssi
+
 
