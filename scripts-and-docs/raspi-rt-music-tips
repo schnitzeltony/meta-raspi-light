@@ -21,7 +21,6 @@ Setup new music image:
 * REMOVE NETWORK PLUG
 
 root:
-* /etc/sddm.conf -> User for autologin
 * systemctl disable brcm43438
 * systemctl disable serial-getty@ttyS0
 * systemctl disable serial-getty@ttyAMA0
