@@ -3,10 +3,11 @@ Howto reduce Jack XRUN when playing low latency MIDI Music
 * cpu frequency governor performance:
     sudo cpufreq-set -g performance
 
-* systemd/journald storage to RAM: 
+* systemd/journald storage to RAM (done automatically when using
+  meta-mortsgna/xfce4-music-image):
     /etc/systemdjournald.conf: Storage=volatile
 
-* RT kernel setup /etc/limits.d(95-audio-teaks.conf (see meta-misc/audio-tweaks)
+* RT kernel setup /etc/limits.d/95-audio-tweaks.conf (see meta-qt5-extra/audio-tweaks)
 
 * Avoid autostart of pulseaudio (Session/Autostart)
 
@@ -16,29 +17,30 @@ Howto reduce Jack XRUN when playing low latency MIDI Music
 
 Setup new music image:
 
-REMOVE NETWORK PLUG FIRST
+* BACKUP DAW SESSIONS
+* REMOVE NETWORK PLUG
 
 root:
-* /etc/sddm.conf
-* /etc/systemd/journald.conf
-* rm /var/log/journal
-* systemctl disable brcm43438.service
-* systemctl disable serial-getty@ttyS0.service
-* systemctl disable serial-getty@ttyAMA0.service
+* /etc/sddm.conf -> User for autologin
+* systemctl disable brcm43438
+* systemctl disable serial-getty@ttyS0
+* systemctl disable serial-getty@ttyAMA0
 * in /usr/share/alsa/alsa.conf: Entries (check soundcards with aplay -L)
   * defaults.ctl.card 0 -> defaults.ctl.!card "sndrpihifiberry"
   * defaults.pcm.card 0 -> defaults.pcm.!card "sndrpihifiberry"
-* rm /usr/share/alsa/alsa.conf.d/*
-* audioinjector: mixer control / alsactl store
+* mv /usr/share/alsa/alsa.conf.d/50-pulseaudio.conf /usr/share/alsa/alsa.conf.d/50-pulseaudio.conf_
+* mv /usr/share/alsa/alsa.conf.d/99-pulseaudio-default.conf /usr/share/alsa/alsa.conf.d/99-pulseaudio-default.conf_
+* audioinjector: enable mixer control "Output Mixer HiFi"
 * passwd
 
 user
 * passwd
+* check session autostart (blueman/baloo..)
+* reduce screen resolution (yes really tested: 1280x1024 / 1280x720 are fine)
 * restart
-* check session autostart (blueman..)
-* think about reducing screen resolution
 * network plug
 * check journalctl output
+* check systemd-analyse: Can be 8-9s
 * datetime: timezone
 * jack
 * qtractor...
