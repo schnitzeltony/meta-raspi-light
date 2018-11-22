@@ -1,0 +1,20 @@
+# Audioinjector sound
+#dtoverlay=audioinjector-wm8731-audio
+
+# Hifiberry Sound
+#dtoverlay=hifiberry-dacplus
+
+# Onboard sound fallback
+#dtparam=audio=on
+
+# Enable VC4 Graphics
+dtoverlay=vc4-kms-v3d,cma-256
+
+# Force serial console for Pi3
+dtoverlay=pi3-disable-bt
+
+# Disable wifi for Pi3
+dtoverlay=pi3-disable-wifi
+
+# Help some monitors / others don't work
+#hdmi_ignore_edid=0xa5000080
