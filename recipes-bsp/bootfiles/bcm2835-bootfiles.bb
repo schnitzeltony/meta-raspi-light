@@ -5,12 +5,12 @@ LIC_FILES_CHKSUM = "file://LICENCE.broadcom;md5=4a4d169737c0786fb9482bb6d30401d1
 
 inherit deploy
 
-PV = "20180417"
+PV = "20181112"
 
 SRC_URI = "https://github.com/raspberrypi/firmware/archive/1.${PV}.tar.gz"
 #SRC_URI = "https://github.com/schnitzeltony/firmware/archive/schnitzel-${PV}.tar.gz"
-SRC_URI[md5sum] = "db894ff6b2538b0bb03ab7b6a8fc4116"
-SRC_URI[sha256sum] = "aa3b7dfc9760c4be47f23a6210b6b989cf95b92e695dd4682facccd6c712c3a5"
+SRC_URI[md5sum] = "1d041e337eb0de954989d9f6b4a135ec"
+SRC_URI[sha256sum] = "eccb3221fe5fbf9e44e7d1a79b2f401eb7527a41fb8ea7fe7231bc188a8ff50b"
 
 RDEPENDS_${PN} = "rpi-config"
 
