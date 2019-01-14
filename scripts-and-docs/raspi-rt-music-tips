@@ -24,9 +24,15 @@ root:
 * systemctl disable brcm43438
 * systemctl disable serial-getty@ttyS0
 * systemctl disable serial-getty@ttyAMA0
-* in /usr/share/alsa/alsa.conf: Entries (check soundcards with aplay -L)
-  * defaults.ctl.card 0 -> defaults.ctl.!card "sndrpihifiberry"
-  * defaults.pcm.card 0 -> defaults.pcm.!card "sndrpihifiberry"
+* create /home/<user>/.asoundrc with (soundcards can be sndrpihifiberry/audioinjectorpi...)
+    pcm.!default {
+        type hw
+        card sndrpihifiberry
+    }
+    ctl.!default {
+        type hw
+        card sndrpihifiberry
+    }
 * mv /usr/share/alsa/alsa.conf.d/50-pulseaudio.conf /usr/share/alsa/alsa.conf.d/50-pulseaudio.conf_
 * mv /usr/share/alsa/alsa.conf.d/99-pulseaudio-default.conf /usr/share/alsa/alsa.conf.d/99-pulseaudio-default.conf_
 * audioinjector: enable mixer control "Output Mixer HiFi"
@@ -35,14 +41,13 @@ root:
 user
 * passwd
 * check session autostart (blueman/baloo..)
-* reduce screen resolution (yes really tested: 1280x1024 / 1280x720 are fine)
+* datetime: timezone
+* optionally for a tiny better performance: reduce screen resolution (yes really tested: 1280x1024 / 1280x720 are fine)
 * restart
 * network plug
 * check journalctl output
 * check systemd-analyse: Can be 8-9s
-* datetime: timezone
 * jack
-* qtractor...
-* fluid-dssi
-
+* qtractor
+* chromium youtube
 
