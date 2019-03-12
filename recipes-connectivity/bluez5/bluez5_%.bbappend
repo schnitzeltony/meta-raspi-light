@@ -24,14 +24,20 @@ BCM_BT_RDEPENDS = "\
 
 # for raspberrypi3
 SRC_URI_append_raspberrypi3 = " ${BCM_BT_SOURCES}"
+SRC_URI_append_raspberrypi3-a9 = " ${BCM_BT_SOURCES}"
 
 do_install_append_raspberrypi3() {
     enable_bcm_bluetooth
 }
+do_install_append_raspberrypi3-a9() {
+    enable_bcm_bluetooth
+}
 
 SYSTEMD_SERVICE_${PN}_append_raspberrypi3 = " ${BCM_BT_SERVICE}"
+SYSTEMD_SERVICE_${PN}_append_raspberrypi3-a9 = " ${BCM_BT_SERVICE}"
 
 RDEPENDS_${PN}_append_raspberrypi3 = " ${BCM_BT_RDEPENDS}"
+RDEPENDS_${PN}_append_raspberrypi3-a9 = " ${BCM_BT_RDEPENDS}"
 
 # for raspberrypi0-wifi
 SRC_URI_append_raspberrypi0-wifi = " ${BCM_BT_SOURCES}"
