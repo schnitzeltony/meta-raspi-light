@@ -2,7 +2,6 @@ inherit kernel siteinfo
 require recipes-kernel/linux/linux-yocto.inc
 
 DESCRIPTION = "Linux Kernel for Raspberry Pi"
-LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 COMPATIBLE_MACHINE = "raspberrypi"
 
