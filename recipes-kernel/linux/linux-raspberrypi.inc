@@ -14,8 +14,14 @@ KBUILD_DEFCONFIG_raspberrypi2 ?= "bcm2709_defconfig"
 KBUILD_DEFCONFIG_raspberrypi2-a9 ?= "bcm2709_defconfig"
 KBUILD_DEFCONFIG_raspberrypi3-64 ?= "bcmrpi3_defconfig"
 
+# serial - necessary for early kernel problems (requires adapter)
+#CONSOLE="serial0,115200"
+# screen
+CONSOLE="tty1"
+
 # CMDLINE for raspberrypi
-CMDLINE = "dwc_otg.lpm_enable=0 console=serial0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait"
+
+CMDLINE = "dwc_otg.lpm_enable=0 console=${CONSOLE} root=/dev/mmcblk0p2 rootfstype=ext4 rootwait"
 
 # Add the kernel debugger over console kernel command line option if enabled
 CMDLINE_append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
