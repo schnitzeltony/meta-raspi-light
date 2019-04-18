@@ -21,6 +21,7 @@ Setup new music image:
 * REMOVE NETWORK PLUG
 
 root:
+* systemctl disable systemd-networkd-wait-online.service
 * systemctl disable brcm43438
 * systemctl disable serial-getty@ttyS0
 * systemctl disable serial-getty@ttyAMA0
