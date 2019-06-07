@@ -41,3 +41,6 @@ do_deploy[dirs] += "${DEPLOYDIR}/${PN}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+# Fetching git is close to suicide
+INSANE_SKIP = "src-uri-bad"
+
