@@ -8,7 +8,10 @@
 #dtparam=audio=on
 
 # Enable VC4 Graphics
-dtoverlay=vc4-kms-v3d,cma-256
+#dtoverlay=vc4-kms-v3d
+
+# Enable VC4 Graphics (no HDMI sound - preferred)
+dtoverlay=vc4-kms-v3d,audio=off
 
 # Force serial console for Pi3
 dtoverlay=pi3-disable-bt
