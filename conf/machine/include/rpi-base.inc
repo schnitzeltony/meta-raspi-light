@@ -11,41 +11,58 @@ XSERVER = " \
     xserver-xorg \
     xserver-xorg-extension-glx \
     xf86-video-modesetting \
-    "
+"
 
+# we should automatize this (+machine specific blacklist)
 KERNEL_DEVICETREE ?= " \
-    bcm2708-rpi-0-w.dtb \
+    bcm2708-rpi-zero-w.dtb \
     bcm2708-rpi-b.dtb \
     bcm2708-rpi-b-plus.dtb \
     bcm2709-rpi-2-b.dtb \
     bcm2710-rpi-3-b.dtb \
     bcm2710-rpi-3-b-plus.dtb \
+    bcm2711-rpi-4-b.dtb \
     bcm2708-rpi-cm.dtb \
     bcm2710-rpi-cm3.dtb \
     \
+    overlays/at86rf233.dtbo \
+    overlays/audioinjector-ultra.dtbo \
     overlays/audioinjector-wm8731-audio.dtbo \
     overlays/dwc2.dtbo \
     overlays/hifiberry-amp.dtbo \
     overlays/hifiberry-dac.dtbo \
+    overlays/hifiberry-dacplusadc.dtbo \
+    overlays/hifiberry-dacplusadcpro.dtbo \
+    overlays/hifiberry-dacplusdsp.dtbo \
     overlays/hifiberry-dacplus.dtbo \
     overlays/hifiberry-digi.dtbo \
+    overlays/hifiberry-digi-pro.dtbo \
     overlays/i2c-rtc.dtbo \
+    overlays/iqaudio-codec.dtbo \
     overlays/iqaudio-dac.dtbo \
     overlays/iqaudio-dacplus.dtbo \
+    overlays/iqaudio-digi-wm8804-audio.dtbo \
+    overlays/justboom-dac.dtbo \
+    overlays/justboom-digi.dtbo \
+    overlays/midi-uart0.dtbo \
+    overlays/midi-uart1.dtbo \
+    overlays/pi3-disable-bt.dtbo \
+    overlays/pi3-disable-wifi.dtbo \
+    overlays/pi3-miniuart-bt.dtbo \
+    overlays/piscreen.dtbo \
+    overlays/piscreen2r.dtbo \
+    overlays/pisound.dtbo \
     overlays/pitft22.dtbo \
+    overlays/pitft28-capacitive.dtbo \
     overlays/pitft28-resistive.dtbo \
     overlays/pitft35-resistive.dtbo \
     overlays/pps-gpio.dtbo \
     overlays/rpi-ft5406.dtbo \
+    overlays/vc4-fkms-v3d.dtbo \
+    overlays/vc4-kms-v3d.dtbo \
     overlays/w1-gpio.dtbo \
     overlays/w1-gpio-pullup.dtbo \
-    overlays/pi3-disable-bt.dtbo \
-    overlays/pi3-disable-wifi.dtbo \
-    overlays/pi3-miniuart-bt.dtbo \
-    overlays/vc4-kms-v3d.dtbo \
-    overlays/vc4-fkms-v3d.dtbo \
-    overlays/at86rf233.dtbo \
-    "
+"
 KERNEL_IMAGETYPE ?= "Image"
 
 MACHINE_FEATURES += "apm usbhost keyboard vfat ext2 screen touchscreen alsa bluetooth wifi sdio"
