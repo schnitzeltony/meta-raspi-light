@@ -1,0 +1,108 @@
+From bed9c21e7a673fa39ab44ba6b0b7ceeae5298aca Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Wed, 6 Nov 2019 22:58:10 +0100
+Subject: [PATCH 2/2] usb: dwc_otg: fix system lockup when interrupts are
+ threaded 4.19
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ drivers/usb/host/dwc_otg/dwc_otg_cil_intr.c |  7 +++----
+ drivers/usb/host/dwc_otg/dwc_otg_hcd.c      | 14 ++++++--------
+ 2 files changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/usb/host/dwc_otg/dwc_otg_cil_intr.c b/drivers/usb/host/dwc_otg/dwc_otg_cil_intr.c
+index 799ab14b9eda..23df47ac37fd 100644
+--- a/drivers/usb/host/dwc_otg/dwc_otg_cil_intr.c
++++ b/drivers/usb/host/dwc_otg/dwc_otg_cil_intr.c
+@@ -1337,6 +1337,7 @@ static inline uint32_t dwc_otg_read_common_intr(dwc_otg_core_if_t * core_if, gin
+ 	gintmsk_common.b.lpmtranrcvd = 1;
+ #endif
+ 	gintmsk_common.b.restoredone = 1;
++	unsigned long flags;
+ 	if(dwc_otg_is_device_mode(core_if))
+ 	{
+ 		/** @todo: The port interrupt occurs while in device
+@@ -1345,8 +1346,7 @@ static inline uint32_t dwc_otg_read_common_intr(dwc_otg_core_if_t * core_if, gin
+ 		gintmsk_common.b.portintr = 1;
+ 	}
+ 	if(fiq_enable) {
+-		local_fiq_disable();
+-		fiq_fsm_spin_lock(&hcd->fiq_state->lock);
++		fiq_fsm_spin_lock_irqsave(&hcd->fiq_state->lock, flags);
+ 		gintsts.d32 = DWC_READ_REG32(&core_if->core_global_regs->gintsts);
+ 		gintmsk.d32 = DWC_READ_REG32(&core_if->core_global_regs->gintmsk);
+ 		/* Pull in the interrupts that the FIQ has masked */
+@@ -1354,8 +1354,7 @@ static inline uint32_t dwc_otg_read_common_intr(dwc_otg_core_if_t * core_if, gin
+ 		gintmsk.d32 |= gintmsk_common.d32;
+ 		/* for the upstairs function to reenable - have to read it here in case FIQ triggers again */
+ 		reenable_gintmsk->d32 = gintmsk.d32;
+-		fiq_fsm_spin_unlock(&hcd->fiq_state->lock);
+-		local_fiq_enable();
++		fiq_fsm_spin_unlock_irqrestore(&hcd->fiq_state->lock, flags);
+ 	} else {
+ 		gintsts.d32 = DWC_READ_REG32(&core_if->core_global_regs->gintsts);
+ 		gintmsk.d32 = DWC_READ_REG32(&core_if->core_global_regs->gintmsk);
+diff --git a/drivers/usb/host/dwc_otg/dwc_otg_hcd.c b/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
+index c22af5a29dd4..fb1980b3130b 100644
+--- a/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
++++ b/drivers/usb/host/dwc_otg/dwc_otg_hcd.c
+@@ -290,6 +290,7 @@ static int32_t dwc_otg_hcd_start_cb(void *p)
+ static int32_t dwc_otg_hcd_disconnect_cb(void *p)
+ {
+ 	gintsts_data_t intr;
++	unsigned long flags;
+ 	dwc_otg_hcd_t *dwc_otg_hcd = p;
+ 
+ 	DWC_SPINLOCK(dwc_otg_hcd->lock);
+@@ -299,8 +300,7 @@ static int32_t dwc_otg_hcd_disconnect_cb(void *p)
+ 	dwc_otg_hcd->flags.b.port_connect_status_change = 1;
+ 	dwc_otg_hcd->flags.b.port_connect_status = 0;
+ 	if(fiq_enable) {
+-		local_fiq_disable();
+-		fiq_fsm_spin_lock(&dwc_otg_hcd->fiq_state->lock);
++		fiq_fsm_spin_unlock_irqrestore(&dwc_otg_hcd->fiq_state->lock, flags);
+ 	}
+ 	/*
+ 	 * Shutdown any transfers in process by clearing the Tx FIFO Empty
+@@ -379,8 +379,7 @@ static int32_t dwc_otg_hcd_disconnect_cb(void *p)
+ 	}
+ 
+ 	if(fiq_enable) {
+-		fiq_fsm_spin_unlock(&dwc_otg_hcd->fiq_state->lock);
+-		local_fiq_enable();
++		fiq_fsm_spin_unlock_irqrestore(&dwc_otg_hcd->fiq_state->lock, flags);
+ 	}
+ 
+ 	if (dwc_otg_hcd->fops->disconnect) {
+@@ -546,6 +545,7 @@ int dwc_otg_hcd_urb_dequeue(dwc_otg_hcd_t * hcd,
+ {
+ 	dwc_otg_qh_t *qh;
+ 	dwc_otg_qtd_t *urb_qtd;
++	unsigned long flags;
+ 	BUG_ON(!hcd);
+ 	BUG_ON(!dwc_otg_urb);
+ 
+@@ -600,15 +600,13 @@ int dwc_otg_hcd_urb_dequeue(dwc_otg_hcd_t * hcd,
+ 			/* In FIQ FSM mode, we need to shut down carefully.
+ 			 * The FIQ may attempt to restart a disabled channel */
+ 			if (fiq_fsm_enable && (hcd->fiq_state->channel[n].fsm != FIQ_PASSTHROUGH)) {
+-				local_fiq_disable();
+-				fiq_fsm_spin_lock(&hcd->fiq_state->lock);
++				fiq_fsm_spin_lock_irqsave(&hcd->fiq_state->lock, flags);
+ 				qh->channel->halt_status = DWC_OTG_HC_XFER_URB_DEQUEUE;
+ 				qh->channel->halt_pending = 1;
+ 				if (hcd->fiq_state->channel[n].fsm == FIQ_HS_ISOC_TURBO ||
+ 					hcd->fiq_state->channel[n].fsm == FIQ_HS_ISOC_SLEEPING)
+ 					hcd->fiq_state->channel[n].fsm = FIQ_HS_ISOC_ABORTED;
+-				fiq_fsm_spin_unlock(&hcd->fiq_state->lock);
+-				local_fiq_enable();
++				fiq_fsm_spin_unlock_irqrestore(&hcd->fiq_state->lock, flags);
+ 			} else {
+ 				dwc_otg_hc_halt(hcd->core_if, qh->channel,
+ 						DWC_OTG_HC_XFER_URB_DEQUEUE);
+-- 
+2.21.0
+
