@@ -63,7 +63,7 @@ index c22af5a29dd4..fb1980b3130b 100644
  	if(fiq_enable) {
 -		local_fiq_disable();
 -		fiq_fsm_spin_lock(&dwc_otg_hcd->fiq_state->lock);
-+		fiq_fsm_spin_unlock_irqrestore(&dwc_otg_hcd->fiq_state->lock, flags);
++		fiq_fsm_spin_lock_irqsave(&dwc_otg_hcd->fiq_state->lock, flags);
  	}
  	/*
  	 * Shutdown any transfers in process by clearing the Tx FIFO Empty
