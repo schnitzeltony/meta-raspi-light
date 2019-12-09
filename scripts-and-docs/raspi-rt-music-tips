@@ -47,7 +47,9 @@ user:
 * network plug
 * check journalctl output
 * check systemd-analyse: Can be 8-9s
+* glmark-es2: On Pi3 (no B+) ~145
 * jack setup
 * qtractor midiimport
 * chromium add ad-blocker / check youtube music-video
-
+* mame
+* mixxx
