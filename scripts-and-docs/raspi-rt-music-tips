@@ -39,7 +39,7 @@ root:
 
 user:
 * passwd
-* check session autostart (blueman/baloo/scrensaver..)
+* check session autostart (blueman/baloo/tracker/scrensaver..)
 * datetime: timezone
 * optionally for a tiny better performance: reduce screen resolution (yes really tested: 1280x1024 / 1280x720 are fine)
 * check /var/log/postinst.log
