@@ -13,6 +13,7 @@ KCONFIG_MODE = "--alldefconfig"
 # We pull in the default config from the RPi kernel GIT tree.
 KBUILD_DEFCONFIG_raspberrypi0-wifi ?= "bcmrpi_defconfig"
 KBUILD_DEFCONFIG_raspberrypi ?= "bcmrpi_defconfig"
+KBUILD_DEFCONFIG_raspberrypi-cm3 ?= "bcm2709_defconfig"
 KBUILD_DEFCONFIG_raspberrypi2 ?= "bcm2709_defconfig"
 KBUILD_DEFCONFIG_raspberrypi3 ?= "bcm2709_defconfig"
 KBUILD_DEFCONFIG_raspberrypi3-64 ?= "bcmrpi3_defconfig"

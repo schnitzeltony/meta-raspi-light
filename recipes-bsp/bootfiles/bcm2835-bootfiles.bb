@@ -1,9 +1,9 @@
 DESCRIPTION = "Closed source binary files to help boot the ARM on the BCM2835."
-LICENSE = "Proprietary"
+LICENSE = "Broadcom-RPi"
 
 LIC_FILES_CHKSUM = "file://LICENCE.broadcom;md5=4a4d169737c0786fb9482bb6d30401d1"
 
-inherit deploy
+inherit deploy nopackages
 
 PV = "20190925"
 
@@ -14,7 +14,7 @@ SRC_URI[sha256sum] = "b3c5c9d3cda1f77caf317b8d1f0496cd7ca791ddaeec8207a5a1940111
 
 RDEPENDS_${PN} = "rpi-config"
 
-COMPATIBLE_MACHINE = "raspberrypi"
+COMPATIBLE_MACHINE = "^rpi$"
 
 #S = "${WORKDIR}/firmware-schnitzel-${PV}/boot"
 S = "${WORKDIR}/firmware-1.${PV}/boot"
@@ -36,7 +36,9 @@ do_deploy() {
     touch ${DEPLOYDIR}/${PN}/${PN}-${PV}.stamp
 }
 
-addtask deploy before do_package after do_install
+do_deploy[depends] += "rpi-config:do_deploy"
+
+addtask deploy before do_build after do_install
 do_deploy[dirs] += "${DEPLOYDIR}/${PN}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

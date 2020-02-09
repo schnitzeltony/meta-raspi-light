@@ -19,5 +19,10 @@ dtoverlay=pi3-disable-bt
 # Disable wifi for Pi3
 dtoverlay=pi3-disable-wifi
 
+# Force 64 bit - see: https://github.com/raspberrypi/firmware/issues/1193
+# arm_64bit=1
+
 # Help some monitors / others don't work
 #hdmi_ignore_edid=0xa5000080
+
+
