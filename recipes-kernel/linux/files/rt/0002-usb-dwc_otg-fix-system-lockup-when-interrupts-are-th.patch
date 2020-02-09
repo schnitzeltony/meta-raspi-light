@@ -85,24 +85,24 @@ index c22af5a29dd4..fb1980b3130b 100644
  	BUG_ON(!hcd);
  	BUG_ON(!dwc_otg_urb);
  
-@@ -600,15 +600,13 @@ int dwc_otg_hcd_urb_dequeue(dwc_otg_hcd_t * hcd,
- 			/* In FIQ FSM mode, we need to shut down carefully.
- 			 * The FIQ may attempt to restart a disabled channel */
- 			if (fiq_fsm_enable && (hcd->fiq_state->channel[n].fsm != FIQ_PASSTHROUGH)) {
+@@ -614,15 +614,13 @@ int dwc_otg_hcd_urb_dequeue(dwc_otg_hcd_t * hcd,
+ 				int running = 0;
+ 				enum fiq_fsm_state state;
+ 
 -				local_fiq_disable();
 -				fiq_fsm_spin_lock(&hcd->fiq_state->lock);
 +				fiq_fsm_spin_lock_irqsave(&hcd->fiq_state->lock, flags);
  				qh->channel->halt_status = DWC_OTG_HC_XFER_URB_DEQUEUE;
  				qh->channel->halt_pending = 1;
  				if (hcd->fiq_state->channel[n].fsm == FIQ_HS_ISOC_TURBO ||
- 					hcd->fiq_state->channel[n].fsm == FIQ_HS_ISOC_SLEEPING)
+ 				    hcd->fiq_state->channel[n].fsm == FIQ_HS_ISOC_SLEEPING)
  					hcd->fiq_state->channel[n].fsm = FIQ_HS_ISOC_ABORTED;
 -				fiq_fsm_spin_unlock(&hcd->fiq_state->lock);
 -				local_fiq_enable();
 +				fiq_fsm_spin_unlock_irqrestore(&hcd->fiq_state->lock, flags);
- 			} else {
- 				dwc_otg_hc_halt(hcd->core_if, qh->channel,
- 						DWC_OTG_HC_XFER_URB_DEQUEUE);
+ 
+ 				if (dwc_qh_is_non_per(qh)) {
+ 					do {
 -- 
 2.21.0
 
