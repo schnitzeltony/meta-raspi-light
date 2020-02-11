@@ -28,11 +28,6 @@ IMAGE_TYPEDEP_rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
 # Set kernel and boot loader
 IMAGE_BOOTLOADER ?= "bcm2835-bootfiles"
 
-# Kernel image name
-SDIMG_KERNELIMAGE_raspberrypi  ?= "kernel.img"
-SDIMG_KERNELIMAGE_raspberrypi2 ?= "kernel7.img"
-SDIMG_KERNELIMAGE_raspberrypi3-64 ?= "kernel8.img"
-
 # Boot partition volume id
 BOOTDD_VOLUME_ID ?= "${MACHINE}"
 
