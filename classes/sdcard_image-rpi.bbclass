@@ -50,8 +50,6 @@ do_image_rpi_sdimg[depends] = " \
     dosfstools-native:do_populate_sysroot \
     virtual/kernel:do_deploy \
     ${IMAGE_BOOTLOADER}:do_deploy \
-    ${@bb.utils.contains('RPI_USE_U_BOOT', '1', 'u-boot:do_deploy', '',d)} \
-    ${@bb.utils.contains('RPI_USE_U_BOOT', '1', 'rpi-u-boot-scr:do_deploy', '',d)} \
 "
 
 do_image_rpi_sdimg[recrdeps] = "do_build"
@@ -70,7 +68,6 @@ SDIMG = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.rpi-sdimg"
 FATPAYLOAD ?= ""
 
 # SD card vfat partition image name
-SDIMG_VFAT_DEPLOY ?= "${RPI_USE_U_BOOT}"
 SDIMG_VFAT = "${IMAGE_NAME}.vfat"
 SDIMG_LINK_VFAT = "${IMGDEPLOYDIR}/${IMAGE_LINK_NAME}.vfat"
 
@@ -129,20 +126,10 @@ IMAGE_CMD_rpi-sdimg () {
             mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::overlays/$dtb
         done
     fi
-    if [ "${RPI_USE_U_BOOT}" = "1" ]; then
-        mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot.bin ::${SDIMG_KERNELIMAGE}
-        mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/boot.scr ::boot.scr
-        if [ ! -z "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" = "1" ]; then
-            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${INITRAMFS_SYMLINK_NAME}.bin ::${KERNEL_IMAGETYPE}
-        else
-            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE} ::${KERNEL_IMAGETYPE}
-        fi
+    if [ ! -z "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" = "1" ]; then
+        mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${INITRAMFS_SYMLINK_NAME}.bin ::${SDIMG_KERNELIMAGE}
     else
-        if [ ! -z "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" = "1" ]; then
-            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${INITRAMFS_SYMLINK_NAME}.bin ::${SDIMG_KERNELIMAGE}
-        else
-            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE} ::${SDIMG_KERNELIMAGE}
-        fi
+        mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE} ::${SDIMG_KERNELIMAGE}
     fi
 
     if [ -n ${FATPAYLOAD} ] ; then
@@ -156,12 +143,6 @@ IMAGE_CMD_rpi-sdimg () {
     # Add stamp file
     echo "${IMAGE_NAME}" > ${WORKDIR}/image-version-info
     mcopy -i ${WORKDIR}/boot.img -v ${WORKDIR}/image-version-info ::
-
-    # Deploy vfat partition
-    if [ "${SDIMG_VFAT_DEPLOY}" = "1" ]; then
-        cp ${WORKDIR}/boot.img ${IMGDEPLOYDIR}/${SDIMG_VFAT}
-        ln -sf ${SDIMG_VFAT} ${SDIMG_LINK_VFAT}
-    fi
 
     # Burn Partitions
     dd if=${WORKDIR}/boot.img of=${SDIMG} conv=notrunc seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)

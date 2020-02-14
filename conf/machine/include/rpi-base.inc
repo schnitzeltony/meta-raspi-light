@@ -63,7 +63,7 @@ KERNEL_DEVICETREE ?= " \
     overlays/w1-gpio.dtbo \
     overlays/w1-gpio-pullup.dtbo \
 "
-KERNEL_IMAGETYPE ?= "Image"
+KERNEL_IMAGETYPE ?= "zImage"
 
 MACHINE_FEATURES += "apm usbhost keyboard vfat ext2 screen touchscreen alsa bluetooth wifi sdio"
 
