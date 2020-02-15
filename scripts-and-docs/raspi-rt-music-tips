@@ -22,7 +22,7 @@ Setup new music image:
 
 root:
 * systemctl disable systemd-networkd-wait-online.service
-* systemctl disable brcm43438
+* TODO systemctl disable brcm43438
 * systemctl disable serial-getty@ttyS0
 * systemctl disable serial-getty@ttyAMA0
 * create /home/<user>/.asoundrc with (soundcards can be sndrpihifiberry/audioinjectorpi...)
@@ -47,7 +47,7 @@ user:
 * network plug
 * check journalctl output
 * check systemd-analyse: Can be 8-9s
-* glmark-es2: On Pi3 (no B+) ~145
+* glmark-es2: On Pi3 (no B+) ~145 / On Pi 4 ~269
 * jack setup
 * qtractor midiimport
 * chromium add ad-blocker / check youtube music-video
