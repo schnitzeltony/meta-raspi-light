@@ -1,5 +1,3 @@
-PACKAGECONFIG_GL_rpi = "egl gles2"
-
 PACKAGECONFIG_append_rpi = " \
-    kms \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl kms', '', d)} \
 "
