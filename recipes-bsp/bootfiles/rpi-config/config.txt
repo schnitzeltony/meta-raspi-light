@@ -7,6 +7,10 @@
 # Onboard sound fallback
 #dtparam=audio=on
 
+# uncomment this if your display has a black border of unused pixels visible
+# and your display can output without overscan
+#disable_overscan=1
+
 # Enable VC4 Graphics
 #dtoverlay=vc4-kms-v3d
 
