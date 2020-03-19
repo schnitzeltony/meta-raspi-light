@@ -10,7 +10,7 @@ RT_PATCHES = " \
 	file://rt/0002-usb-dwc_otg-fix-system-lockup-when-interrupts-are-th.patch \
 "
 
-SRCREV = "2fab54c74bf956951e61c6d4fe473995e8d07010"
+SRCREV = "4137a0c092ab26fd3b40f49b321988e99800d085"
 SRC_URI = " \
     git://github.com/raspberrypi/linux.git;protocol=git;branch=rpi-4.19.y \
     ${@oe.utils.conditional("ENABLE_RPI_RT", "1", "${RT_PATCHES}", "", d)} \
