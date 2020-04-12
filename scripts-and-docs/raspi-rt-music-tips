@@ -42,14 +42,15 @@ user:
 * check session autostart (blueman/baloo/tracker/scrensaver..)
 * datetime: timezone
 * optionally for a tiny better performance: reduce screen resolution (yes really tested: 1280x1024 / 1280x720 are fine)
-* check /var/log/postinst.log
+* check /var/log/postinstall.log
 * restart
 * network plug
 * check journalctl output
-* check systemd-analyse: Can be 8-9s
-* glmark-es2: On Pi3 (no B+) ~145 / On Pi 4 ~269
+* check systemd-analyze: Can be 8-9s
+* glmark2-es2: On Pi3 (no B+) ~145 / On Pi 4 ~269
 * jack setup
 * qtractor midiimport
 * chromium add ad-blocker / check youtube music-video
 * mame
+* qmmp/projectm
 * mixxx
