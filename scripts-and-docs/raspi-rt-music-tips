@@ -50,7 +50,7 @@ user:
 * glmark2-es2: On Pi3 (no B+) ~145 / On Pi 4 ~269
 * jack setup
 * qtractor midiimport
-* chromium add ad-blocker / check youtube music-video
+* chromium unselect 'Allow Chromium-sign-in / add ad-blocker / check youtube music-video
 * mame
 * qmmp/projectm
 * mixxx
