@@ -2469,10 +2469,10 @@ index 37d9016d4768..d8b40085c2b8 100644
  	jz	restore_all_kernel
  	call	preempt_schedule_irq
 diff --git a/arch/x86/entry/entry_64.S b/arch/x86/entry/entry_64.S
-index ccb5e3486aee..663a99f6320f 100644
+index dfe26f3cfffc..94fccaa04bfa 100644
 --- a/arch/x86/entry/entry_64.S
 +++ b/arch/x86/entry/entry_64.S
-@@ -732,7 +732,23 @@ retint_kernel:
+@@ -733,7 +733,23 @@ retint_kernel:
  	btl	$9, EFLAGS(%rsp)		/* were interrupts off? */
  	jnc	1f
  0:	cmpl	$0, PER_CPU_VAR(__preempt_count)
@@ -2496,7 +2496,7 @@ index ccb5e3486aee..663a99f6320f 100644
  	call	preempt_schedule_irq
  	jmp	0b
  1:
-@@ -1083,6 +1099,7 @@ bad_gs:
+@@ -1084,6 +1100,7 @@ bad_gs:
  	jmp	2b
  	.previous
  
@@ -2504,7 +2504,7 @@ index ccb5e3486aee..663a99f6320f 100644
  /* Call softirq on interrupt stack. Interrupts are off. */
  ENTRY(do_softirq_own_stack)
  	pushq	%rbp
-@@ -1093,6 +1110,7 @@ ENTRY(do_softirq_own_stack)
+@@ -1094,6 +1111,7 @@ ENTRY(do_softirq_own_stack)
  	leaveq
  	ret
  ENDPROC(do_softirq_own_stack)
@@ -2603,10 +2603,10 @@ index 33d3c88a7225..c00e27af2205 100644
  typedef sigset_t compat_sigset_t;
  #endif
 diff --git a/arch/x86/include/asm/stackprotector.h b/arch/x86/include/asm/stackprotector.h
-index 8ec97a62c245..7bc85841fc56 100644
+index 9c556ea2eaa7..b136992beb1b 100644
 --- a/arch/x86/include/asm/stackprotector.h
 +++ b/arch/x86/include/asm/stackprotector.h
-@@ -60,7 +60,7 @@
+@@ -65,7 +65,7 @@
   */
  static __always_inline void boot_init_stack_canary(void)
  {
@@ -2615,7 +2615,7 @@ index 8ec97a62c245..7bc85841fc56 100644
  	u64 tsc;
  
  #ifdef CONFIG_X86_64
-@@ -71,8 +71,14 @@ static __always_inline void boot_init_stack_canary(void)
+@@ -76,8 +76,14 @@ static __always_inline void boot_init_stack_canary(void)
  	 * of randomness. The TSC only matters for very early init,
  	 * there it already has some randomness on most systems. Later
  	 * on during the bootup the random pool has true entropy too.
@@ -2910,7 +2910,7 @@ index 8c6392534d14..d64ca45f5db6 100644
  
  	/*
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 6bfc9eaf8dee..166eaf163324 100644
+index b0fd24ee08d2..dc1d536a86ba 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
 @@ -6877,6 +6877,13 @@ int kvm_arch_init(void *opaque)
@@ -6440,7 +6440,7 @@ index 58f48ea0db23..a41120a34e6d 100644
  
  #else
 diff --git a/fs/exec.c b/fs/exec.c
-index 3818813d725d..4c7de4ac4302 100644
+index cece8c14f377..1941f39a3453 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -1028,12 +1028,14 @@ static int exec_mmap(struct mm_struct *mm)
@@ -7451,7 +7451,7 @@ index b78bab4395d8..7c4bc414a504 100644
 +
  #endif /* defined(_LINUX_DELAY_H) */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 15b8e02880c3..d27634022105 100644
+index 8d568b51778b..f964aeac78bd 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -679,7 +679,7 @@ struct inode {
@@ -11637,7 +11637,7 @@ index 5aebe3be4d7c..4e5af4616dbd 100644
  	.thread_group	= LIST_HEAD_INIT(init_task.thread_group),
  	.thread_node	= LIST_HEAD_INIT(init_signals.thread_head),
 diff --git a/init/main.c b/init/main.c
-index 38a603f62b7b..6e02188386a7 100644
+index ec78f2312610..7c064c6aff55 100644
 --- a/init/main.c
 +++ b/init/main.c
 @@ -560,6 +560,7 @@ asmlinkage __visible void __init start_kernel(void)
@@ -15546,7 +15546,7 @@ index 8138a676fb7d..fa114be5c30f 100644
  
  	return 0;
 diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
-index f5ce9f7ec132..0f00ba01376f 100644
+index 537a2a3c1dea..5b1c16500d07 100644
 --- a/kernel/power/hibernate.c
 +++ b/kernel/power/hibernate.c
 @@ -690,6 +690,10 @@ static int load_image_and_restore(void)
@@ -20755,7 +20755,7 @@ index ae64cb819a9a..1c67aab34ff5 100644
  }
  
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index c41f7d1ab5fa..1d7fc29ac791 100644
+index 4966410bb0f4..dc1e0b7c7984 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -2139,6 +2139,7 @@ tracing_generic_entry_update(struct trace_entry *entry, unsigned long flags,
@@ -22795,11 +22795,11 @@ index 1e9e2ab25539..199c75e03469 100644
  EXPORT_SYMBOL(__ubsan_handle_load_invalid_value);
 diff --git a/localversion-rt b/localversion-rt
 new file mode 100644
-index 000000000000..66a5ed8bf3d7
+index 000000000000..e6c0dc6a54cd
 --- /dev/null
 +++ b/localversion-rt
 @@ -0,0 +1 @@
-+-rt52
++-rt53
 diff --git a/mm/Kconfig b/mm/Kconfig
 index b457e94ae618..0dddbb2a3282 100644
 --- a/mm/Kconfig
@@ -23414,7 +23414,7 @@ index 3e612ae748e9..d0ccc070979f 100644
  #ifdef finish_arch_post_lock_switch
  	finish_arch_post_lock_switch();
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 57888cedf244..889b4089b289 100644
+index d8c3051387d1..98abae7e843e 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -60,6 +60,7 @@
@@ -23565,7 +23565,7 @@ index 57888cedf244..889b4089b289 100644
  }
  
  static void __init __free_pages_boot_core(struct page *page, unsigned int order)
-@@ -2544,13 +2579,18 @@ void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp)
+@@ -2545,13 +2580,18 @@ void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp)
  {
  	unsigned long flags;
  	int to_drain, batch;
@@ -23587,7 +23587,7 @@ index 57888cedf244..889b4089b289 100644
  }
  #endif
  
-@@ -2566,14 +2606,21 @@ static void drain_pages_zone(unsigned int cpu, struct zone *zone)
+@@ -2567,14 +2607,21 @@ static void drain_pages_zone(unsigned int cpu, struct zone *zone)
  	unsigned long flags;
  	struct per_cpu_pageset *pset;
  	struct per_cpu_pages *pcp;
@@ -23613,7 +23613,7 @@ index 57888cedf244..889b4089b289 100644
  }
  
  /*
-@@ -2608,6 +2655,7 @@ void drain_local_pages(struct zone *zone)
+@@ -2609,6 +2656,7 @@ void drain_local_pages(struct zone *zone)
  		drain_pages(cpu);
  }
  
@@ -23621,7 +23621,7 @@ index 57888cedf244..889b4089b289 100644
  static void drain_local_pages_wq(struct work_struct *work)
  {
  	/*
-@@ -2621,6 +2669,7 @@ static void drain_local_pages_wq(struct work_struct *work)
+@@ -2622,6 +2670,7 @@ static void drain_local_pages_wq(struct work_struct *work)
  	drain_local_pages(NULL);
  	preempt_enable();
  }
@@ -23629,7 +23629,7 @@ index 57888cedf244..889b4089b289 100644
  
  /*
   * Spill all the per-cpu pages from all CPUs back into the buddy allocator.
-@@ -2687,7 +2736,14 @@ void drain_all_pages(struct zone *zone)
+@@ -2688,7 +2737,14 @@ void drain_all_pages(struct zone *zone)
  		else
  			cpumask_clear_cpu(cpu, &cpus_with_pcps);
  	}
@@ -23645,7 +23645,7 @@ index 57888cedf244..889b4089b289 100644
  	for_each_cpu(cpu, &cpus_with_pcps) {
  		struct work_struct *work = per_cpu_ptr(&pcpu_drain, cpu);
  		INIT_WORK(work, drain_local_pages_wq);
-@@ -2695,6 +2751,7 @@ void drain_all_pages(struct zone *zone)
+@@ -2696,6 +2752,7 @@ void drain_all_pages(struct zone *zone)
  	}
  	for_each_cpu(cpu, &cpus_with_pcps)
  		flush_work(per_cpu_ptr(&pcpu_drain, cpu));
@@ -23653,7 +23653,7 @@ index 57888cedf244..889b4089b289 100644
  
  	mutex_unlock(&pcpu_drain_mutex);
  }
-@@ -2766,7 +2823,8 @@ static bool free_unref_page_prepare(struct page *page, unsigned long pfn)
+@@ -2767,7 +2824,8 @@ static bool free_unref_page_prepare(struct page *page, unsigned long pfn)
  	return true;
  }
  
@@ -23663,7 +23663,7 @@ index 57888cedf244..889b4089b289 100644
  {
  	struct zone *zone = page_zone(page);
  	struct per_cpu_pages *pcp;
-@@ -2795,7 +2853,8 @@ static void free_unref_page_commit(struct page *page, unsigned long pfn)
+@@ -2796,7 +2854,8 @@ static void free_unref_page_commit(struct page *page, unsigned long pfn)
  	pcp->count++;
  	if (pcp->count >= pcp->high) {
  		unsigned long batch = READ_ONCE(pcp->batch);
@@ -23673,7 +23673,7 @@ index 57888cedf244..889b4089b289 100644
  	}
  }
  
-@@ -2806,13 +2865,17 @@ void free_unref_page(struct page *page)
+@@ -2807,13 +2866,17 @@ void free_unref_page(struct page *page)
  {
  	unsigned long flags;
  	unsigned long pfn = page_to_pfn(page);
@@ -23694,7 +23694,7 @@ index 57888cedf244..889b4089b289 100644
  }
  
  /*
-@@ -2823,6 +2886,11 @@ void free_unref_page_list(struct list_head *list)
+@@ -2824,6 +2887,11 @@ void free_unref_page_list(struct list_head *list)
  	struct page *page, *next;
  	unsigned long flags, pfn;
  	int batch_count = 0;
@@ -23706,7 +23706,7 @@ index 57888cedf244..889b4089b289 100644
  
  	/* Prepare pages for freeing */
  	list_for_each_entry_safe(page, next, list, lru) {
-@@ -2832,25 +2900,42 @@ void free_unref_page_list(struct list_head *list)
+@@ -2833,25 +2901,42 @@ void free_unref_page_list(struct list_head *list)
  		set_page_private(page, pfn);
  	}
  
@@ -23754,7 +23754,7 @@ index 57888cedf244..889b4089b289 100644
  }
  
  /*
-@@ -2984,7 +3069,7 @@ static struct page *rmqueue_pcplist(struct zone *preferred_zone,
+@@ -2985,7 +3070,7 @@ static struct page *rmqueue_pcplist(struct zone *preferred_zone,
  	struct page *page;
  	unsigned long flags;
  
@@ -23763,7 +23763,7 @@ index 57888cedf244..889b4089b289 100644
  	pcp = &this_cpu_ptr(zone->pageset)->pcp;
  	list = &pcp->lists[migratetype];
  	page = __rmqueue_pcplist(zone,  migratetype, pcp, list);
-@@ -2992,7 +3077,7 @@ static struct page *rmqueue_pcplist(struct zone *preferred_zone,
+@@ -2993,7 +3078,7 @@ static struct page *rmqueue_pcplist(struct zone *preferred_zone,
  		__count_zid_vm_events(PGALLOC, page_zonenum(page), 1 << order);
  		zone_statistics(preferred_zone, zone);
  	}
@@ -23772,7 +23772,7 @@ index 57888cedf244..889b4089b289 100644
  	return page;
  }
  
-@@ -3019,7 +3104,7 @@ struct page *rmqueue(struct zone *preferred_zone,
+@@ -3020,7 +3105,7 @@ struct page *rmqueue(struct zone *preferred_zone,
  	 * allocate greater than order-1 page units with __GFP_NOFAIL.
  	 */
  	WARN_ON_ONCE((gfp_flags & __GFP_NOFAIL) && (order > 1));
@@ -23781,7 +23781,7 @@ index 57888cedf244..889b4089b289 100644
  
  	do {
  		page = NULL;
-@@ -3039,14 +3124,14 @@ struct page *rmqueue(struct zone *preferred_zone,
+@@ -3040,14 +3125,14 @@ struct page *rmqueue(struct zone *preferred_zone,
  
  	__count_zid_vm_events(PGALLOC, page_zonenum(page), 1 << order);
  	zone_statistics(preferred_zone, zone);
@@ -23798,7 +23798,7 @@ index 57888cedf244..889b4089b289 100644
  	return NULL;
  }
  
-@@ -7157,8 +7242,9 @@ void __init free_area_init(unsigned long *zones_size)
+@@ -7158,8 +7243,9 @@ void __init free_area_init(unsigned long *zones_size)
  
  static int page_alloc_cpu_dead(unsigned int cpu)
  {
@@ -23809,7 +23809,7 @@ index 57888cedf244..889b4089b289 100644
  	drain_pages(cpu);
  
  	/*
-@@ -8067,7 +8153,7 @@ void zone_pcp_reset(struct zone *zone)
+@@ -8068,7 +8154,7 @@ void zone_pcp_reset(struct zone *zone)
  	struct per_cpu_pageset *pset;
  
  	/* avoid races with drain_pages()  */
@@ -23818,7 +23818,7 @@ index 57888cedf244..889b4089b289 100644
  	if (zone->pageset != &boot_pageset) {
  		for_each_online_cpu(cpu) {
  			pset = per_cpu_ptr(zone->pageset, cpu);
-@@ -8076,7 +8162,7 @@ void zone_pcp_reset(struct zone *zone)
+@@ -8077,7 +8163,7 @@ void zone_pcp_reset(struct zone *zone)
  		free_percpu(zone->pageset);
  		zone->pageset = &boot_pageset;
  	}
@@ -25270,7 +25270,7 @@ index 228dfa382eec..bc8d01996f22 100644
  config BQL
  	bool
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 426635e188fc..7be74a0cee23 100644
+index 9ccc14200b80..22ab7a06843f 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
 @@ -196,6 +196,7 @@ static unsigned int napi_gen_id = NR_CPUS;
@@ -25604,7 +25604,7 @@ index 426635e188fc..7be74a0cee23 100644
  
  	net_rps_action_and_irq_enable(sd);
  out:
-@@ -8549,7 +8583,7 @@ static void netdev_init_one_queue(struct net_device *dev,
+@@ -8551,7 +8585,7 @@ static void netdev_init_one_queue(struct net_device *dev,
  	/* Initialize queue lock */
  	spin_lock_init(&queue->_xmit_lock);
  	netdev_set_xmit_lockdep_class(&queue->_xmit_lock, dev->type);
@@ -25613,7 +25613,7 @@ index 426635e188fc..7be74a0cee23 100644
  	netdev_queue_numa_node_write(queue, NUMA_NO_NODE);
  	queue->dev = dev;
  #ifdef CONFIG_BQL
-@@ -9489,6 +9523,7 @@ static int dev_cpu_dead(unsigned int oldcpu)
+@@ -9491,6 +9525,7 @@ static int dev_cpu_dead(unsigned int oldcpu)
  
  	raise_softirq_irqoff(NET_TX_SOFTIRQ);
  	local_irq_enable();
@@ -25621,7 +25621,7 @@ index 426635e188fc..7be74a0cee23 100644
  
  #ifdef CONFIG_RPS
  	remsd = oldsd->rps_ipi_list;
-@@ -9502,10 +9537,13 @@ static int dev_cpu_dead(unsigned int oldcpu)
+@@ -9504,10 +9539,13 @@ static int dev_cpu_dead(unsigned int oldcpu)
  		netif_rx_ni(skb);
  		input_queue_head_incr(oldsd);
  	}
@@ -25636,7 +25636,7 @@ index 426635e188fc..7be74a0cee23 100644
  
  	return 0;
  }
-@@ -9816,8 +9854,9 @@ static int __init net_dev_init(void)
+@@ -9818,8 +9856,9 @@ static int __init net_dev_init(void)
  
  		INIT_WORK(flush, flush_backlog);
  
