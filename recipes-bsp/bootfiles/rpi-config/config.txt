@@ -19,14 +19,14 @@
 
 [pi4]
 # Enable DRM VC4 V3D driver on top of the dispmanx display stack
-dtoverlay=vc4-fkms-v3d
+dtoverlay=vc4-kms-v3d-pi4
 max_framebuffers=2
 
-# Force serial console for Pi3
-dtoverlay=pi3-disable-bt
+# Disable blueooth
+dtoverlay=disable-bt
 
-# Disable wifi for Pi3
-dtoverlay=pi3-disable-wifi
+# Disable wifi
+dtoverlay=disable-wifi
 
 # Force 64 bit - see: https://github.com/raspberrypi/firmware/issues/1193
 # arm_64bit=1
