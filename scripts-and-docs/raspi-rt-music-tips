@@ -54,3 +54,14 @@ user:
 * mame
 * qmmp/projectm
 * mixxx
+* libreoffice
+* vlc
+* qt-creator 
+  standard build directory:
+  /home/morona/tmp/qtbuilds/build-%{CurrentProject:Name}-%{CurrentKit:FileSystemName}-%{CurrentBuild:Name}
+  kit/cmake
+  CMAKE_INSTALL_PREFIX:STRING=/home/morona/tmp/qtinstalls/usr
+  CMAKE_PREFIX_PATH:STRING=/home/morona/tmp/qtinstalls/usr;%{Qt:QT_INSTALL_PREFIX}
+  OE_QMAKE_PATH_EXTERNAL_HOST_BINS:STRING=/usr/bin
+
+
