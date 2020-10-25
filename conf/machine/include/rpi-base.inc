@@ -14,17 +14,7 @@ XSERVER = " \
 "
 
 # we should automatize this (+machine specific blacklist)
-KERNEL_DEVICETREE ?= " \
-    bcm2708-rpi-zero-w.dtb \
-    bcm2708-rpi-b.dtb \
-    bcm2708-rpi-b-plus.dtb \
-    bcm2709-rpi-2-b.dtb \
-    bcm2710-rpi-3-b.dtb \
-    bcm2710-rpi-3-b-plus.dtb \
-    bcm2711-rpi-4-b.dtb \
-    bcm2708-rpi-cm.dtb \
-    bcm2710-rpi-cm3.dtb \
-    \
+KERNEL_DEVICETREE = " \
     overlays/at86rf233.dtbo \
     overlays/audioinjector-ultra.dtbo \
     overlays/audioinjector-wm8731-audio.dtbo \
@@ -63,6 +53,27 @@ KERNEL_DEVICETREE ?= " \
     overlays/w1-gpio.dtbo \
     overlays/w1-gpio-pullup.dtbo \
 "
+
+KERNEL_DEVICETREE_append_arm = " \
+    bcm2708-rpi-zero-w.dtb \
+    bcm2708-rpi-b.dtb \
+    bcm2708-rpi-b-plus.dtb \
+    bcm2709-rpi-2-b.dtb \
+    bcm2708-rpi-cm.dtb \
+    \
+    bcm2710-rpi-3-b.dtb \
+    bcm2710-rpi-3-b-plus.dtb \
+    bcm2711-rpi-4-b.dtb \
+    bcm2710-rpi-cm3.dtb \
+"
+
+KERNEL_DEVICETREE_append_aarch64 = " \
+    broadcom/bcm2710-rpi-3-b.dtb \
+    broadcom/bcm2710-rpi-3-b-plus.dtb \
+    broadcom/bcm2711-rpi-4-b.dtb \
+    broadcom/bcm2710-rpi-cm3.dtb \
+"
+
 KERNEL_IMAGETYPE ?= "zImage"
 
 MACHINE_FEATURES += "apm usbhost keyboard vfat ext2 screen touchscreen alsa bluetooth wifi sdio"
