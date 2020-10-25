@@ -14,34 +14,7 @@ XSERVER = " \
 "
 
 # we should automatize this (+machine specific blacklist)
-KERNEL_DEVICETREE ?= " \
-    bcm2708-rpi-b.dtb \
-    bcm2708-rpi-b-plus.dtb \
-    bcm2708-rpi-b-rev1.dtb \
-    bcm2708-rpi-cm.dtb \
-    bcm2708-rpi-zero.dtb \
-    bcm2708-rpi-zero-w.dtb \
-    bcm2709-rpi-2-b.dtb \
-    bcm2710-rpi-2-b.dtb \
-    bcm2710-rpi-3-b.dtb \
-    bcm2710-rpi-3-b-plus.dtb \
-    bcm2710-rpi-cm3.dtb \
-    bcm2711-rpi-4-b.dtb \
-    bcm2711-rpi-cm4.dtb \
-    bcm2835-rpi-a.dtb \
-    bcm2835-rpi-a-plus.dtb \
-    bcm2835-rpi-b.dtb \
-    bcm2835-rpi-b-plus.dtb \
-    bcm2835-rpi-b-rev2.dtb \
-    bcm2835-rpi-cm1-io1.dtb \
-    bcm2835-rpi-zero.dtb \
-    bcm2835-rpi-zero-w.dtb \
-    bcm2836-rpi-2-b.dtb \
-    bcm2837-rpi-3-a-plus.dtb \
-    bcm2837-rpi-3-b.dtb \
-    bcm2837-rpi-3-b-plus.dtb \
-    bcm2837-rpi-cm3-io3.dtb \
-    \
+KERNEL_DEVICETREE = " \
     overlays/act-led-overlay.dtb \
     overlays/adafruit18-overlay.dtb \
     overlays/adau1977-adc-overlay.dtb \
@@ -247,6 +220,48 @@ KERNEL_DEVICETREE ?= " \
     overlays/w5500-overlay.dtb \
     overlays/wittypi-overlay.dtb \
 "
+
+KERNEL_DEVICETREE_append_arm = " \
+    bcm2708-rpi-b.dtb \
+    bcm2708-rpi-b-plus.dtb \
+    bcm2708-rpi-b-rev1.dtb \
+    bcm2708-rpi-cm.dtb \
+    bcm2708-rpi-zero.dtb \
+    bcm2708-rpi-zero-w.dtb \
+    bcm2709-rpi-2-b.dtb \
+    bcm2710-rpi-2-b.dtb \
+    bcm2710-rpi-3-b.dtb \
+    bcm2710-rpi-3-b-plus.dtb \
+    bcm2710-rpi-cm3.dtb \
+    bcm2711-rpi-4-b.dtb \
+    bcm2711-rpi-cm4.dtb \
+    bcm2835-rpi-a.dtb \
+    bcm2835-rpi-a-plus.dtb \
+    bcm2835-rpi-b.dtb \
+    bcm2835-rpi-b-plus.dtb \
+    bcm2835-rpi-b-rev2.dtb \
+    bcm2835-rpi-cm1-io1.dtb \
+    bcm2835-rpi-zero.dtb \
+    bcm2835-rpi-zero-w.dtb \
+    bcm2836-rpi-2-b.dtb \
+    bcm2837-rpi-3-a-plus.dtb \
+    bcm2837-rpi-3-b.dtb \
+    bcm2837-rpi-3-b-plus.dtb \
+    bcm2837-rpi-cm3-io3.dtb \
+"
+
+KERNEL_DEVICETREE_append_aarch64 = " \
+    broadcom/bcm2710-rpi-2-b.dtb \
+    broadcom/bcm2710-rpi-3-b.dtb \
+    broadcom/bcm2710-rpi-3-b-plus.dtb \
+    broadcom/bcm2710-rpi-cm3.dtb \
+    broadcom/bcm2711-rpi-4-b.dtb \
+    broadcom/bcm2837-rpi-3-a-plus.dtb \
+    broadcom/bcm2837-rpi-3-b.dtb \
+    broadcom/bcm2837-rpi-3-b-plus.dtb \
+    broadcom/bcm2837-rpi-cm3-io3.dtb \
+"
+
 KERNEL_IMAGETYPE ?= "zImage"
 
 MACHINE_FEATURES += "apm usbhost keyboard vfat ext2 screen touchscreen alsa bluetooth wifi sdio"
