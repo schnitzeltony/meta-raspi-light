@@ -50,6 +50,7 @@ do_image_rpi_sdimg[depends] = " \
     dosfstools-native:do_populate_sysroot \
     virtual/kernel:do_deploy \
     ${IMAGE_BOOTLOADER}:do_deploy \
+    rpi-config:do_deploy \
 "
 
 do_image_rpi_sdimg[recrdeps] = "do_build"
