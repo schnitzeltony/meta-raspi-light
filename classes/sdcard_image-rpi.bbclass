@@ -29,7 +29,7 @@ IMAGE_TYPEDEP_rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
 IMAGE_BOOTLOADER ?= "bcm2835-bootfiles"
 
 # Boot partition volume id
-BOOTDD_VOLUME_ID ?= "boot"
+BOOTDD_VOLUME_ID ?= "${MACHINE}"
 
 # Boot partition size [in KiB] (will be rounded up to IMAGE_ROOTFS_ALIGNMENT)
 BOOT_SPACE ?= "80920"
