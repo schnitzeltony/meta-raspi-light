@@ -28,6 +28,7 @@ KERNEL_DEVICETREE = " \
     overlays/adv728x-m.dtbo \
     overlays/adv7282m.dtbo \
     overlays/akkordion-iqdacplus.dtbo \
+    overlays/allo-boss2-dac-audio.dtbo \
     overlays/allo-boss-dac-pcm512x-audio.dtbo \
     overlays/allo-digione.dtbo \
     overlays/allo-katana-dac-audio.dtbo \
@@ -59,6 +60,8 @@ KERNEL_DEVICETREE = " \
     overlays/enc28j60-spi2.dtbo \
     overlays/exc3000.dtbo \
     overlays/fe-pi-audio.dtbo \
+    overlays/fsm-demo.dtbo \
+    overlays/ghost-amp.dtbo \
     overlays/goodix.dtbo \
     overlays/googlevoicehat-soundcard.dtbo \
     overlays/gpio-fan.dtbo \
@@ -138,6 +141,7 @@ KERNEL_DEVICETREE = " \
     overlays/pca953x.dtbo \
     overlays/pibell.dtbo \
     overlays/pifacedigital.dtbo \
+    overlays/pifi-40.dtbo \
     overlays/piglow.dtbo \
     overlays/piscreen2r.dtbo \
     overlays/piscreen.dtbo \
@@ -170,7 +174,6 @@ KERNEL_DEVICETREE = " \
     overlays/sc16is752-spi1.dtbo \
     overlays/sdhost.dtbo \
     overlays/sdio.dtbo \
-    overlays/sdtweak.dtbo \
     overlays/sh1106-spi.dtbo \
     overlays/smi-dev.dtbo \
     overlays/smi-nand.dtbo \
