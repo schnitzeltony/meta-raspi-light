@@ -1,3 +1,6 @@
+# This a reduced set of configuration matching my personal needs. For more
+# configure options and information see http://rpf.io/configtxt
+
 # Audioinjector sound
 #dtoverlay=audioinjector-wm8731-audio
 
@@ -11,25 +14,12 @@
 # and your display can output without overscan
 #disable_overscan=1
 
-# Enable VC4 Graphics
-#dtoverlay=vc4-kms-v3d
+# Disable blueooth
+dtoverlay=disable-bt
 
-# Enable VC4 Graphics (no HDMI sound - preferred)
-#dtoverlay=vc4-kms-v3d,audio=off
-
-[pi4]
-# Enable DRM VC4 V3D driver on top of the dispmanx display stack
-dtoverlay=vc4-fkms-v3d
-max_framebuffers=2
-
-# Force serial console for Pi3
-dtoverlay=pi3-disable-bt
-
-# Disable wifi for Pi3
-dtoverlay=pi3-disable-wifi
-
-# Force 64 bit - see: https://github.com/raspberrypi/firmware/issues/1193
-# arm_64bit=1
+# Disable wifi
+dtoverlay=disable-wifi
 
 # Help some monitors / others don't work
 #hdmi_ignore_edid=0xa5000080
+
