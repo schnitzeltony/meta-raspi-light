@@ -5,10 +5,10 @@ LIC_FILES_CHKSUM = "file://LICENCE.broadcom;md5=c403841ff2837657b2ed8e5bb474ac8d
 
 inherit deploy nopackages
 
-PV = "20201022"
+PV = "20210303"
 
 SRC_URI = "https://github.com/raspberrypi/firmware/archive/1.${PV}.tar.gz"
-SRC_URI[sha256sum] = "95a944d45e19403be9e54ca645d2fb439dac2d862d6d2da0485a4a03192a8d74"
+SRC_URI[sha256sum] = "9b57137c602ecb0d05de6c530c5e5e77d0ad2cb3ffe43e98db81cd44b046de85"
 
 RDEPENDS_${PN} = "rpi-config"
 
