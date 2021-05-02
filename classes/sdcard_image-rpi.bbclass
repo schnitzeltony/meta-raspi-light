@@ -111,7 +111,9 @@ IMAGE_CMD_rpi-sdimg () {
     # Create a vfat image with boot files
     BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
     rm -f ${WORKDIR}/boot.img
-    mkfs.vfat -F32 -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
+    # maximum length allowed 11 chars
+    VOLUME_ID_SHORT=`echo "${BOOTDD_VOLUME_ID}" | sed 's:raspberrypi:rpi:'`
+    mkfs.vfat -F32 -n "$VOLUME_ID_SHORT" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles/* ::/
     if test -n "${DTS}"; then
         # Copy board device trees to root folder
