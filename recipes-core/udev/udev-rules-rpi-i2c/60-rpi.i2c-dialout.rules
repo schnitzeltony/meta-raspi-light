@@ -1,0 +1,2 @@
+SUBSYSTEM=="i2c-dev", GROUP="dialout", MODE="0660"
+
