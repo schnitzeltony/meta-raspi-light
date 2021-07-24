@@ -4,7 +4,7 @@
 #
 
 # boot partition
-ENV{ID_FS_TYPE}=="vfat", ENV{ID_FS_LABEL}=="raspberrypi", \
+ENV{ID_FS_TYPE}=="vfat", ENV{ID_FS_LABEL}=="rpi*", \
   ENV{UDISKS_PRESENTATION_HIDE}="1", ENV{UDISKS_IGNORE}="1"
 
 ##############################################################################################################
