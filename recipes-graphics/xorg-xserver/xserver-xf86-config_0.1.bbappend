@@ -1,11 +1,11 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI_append_rpi = " \
+SRC_URI:append:rpi = " \
     file://xorg.conf.d/98-pitft.conf \
     file://xorg.conf.d/99-calibration.conf \
 "
 
-do_install_append_rpi () {
+do_install:append:rpi () {
     PITFT="${@bb.utils.contains("MACHINE_FEATURES", "pitft", "1", "0", d)}"
     if [ "${PITFT}" = "1" ]; then
         install -d ${D}/${sysconfdir}/X11/xorg.conf.d/
@@ -14,4 +14,4 @@ do_install_append_rpi () {
     fi
 }
 
-FILES_${PN}_rpi += "${sysconfdir}/X11/xorg.conf ${sysconfdir}/X11/xorg.conf.d/*"
+FILES:${PN}:append:rpi = " ${sysconfdir}/X11/xorg.conf.d/*"

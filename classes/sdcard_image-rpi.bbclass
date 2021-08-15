@@ -23,7 +23,7 @@ inherit image_types
 # 0                      4MiB     4MiB + 80MiB       4MiB + 80Mib + SDIMG_ROOTFS
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP:rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
 
 # Set kernel and boot loader
 IMAGE_BOOTLOADER ?= "bcm2835-bootfiles"
@@ -84,7 +84,7 @@ def split_overlays(d, out, ver=None):
 
     return overlays
 
-IMAGE_CMD_rpi-sdimg () {
+IMAGE_CMD:rpi-sdimg () {
 
     # Align partitions
     BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)

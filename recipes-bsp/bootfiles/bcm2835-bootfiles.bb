@@ -12,7 +12,7 @@ PV = "20210527"
 SRC_URI = "https://github.com/raspberrypi/firmware/archive/1.${PV}.tar.gz"
 SRC_URI[sha256sum] = "e137fff9d9de08b4146b77f6711ce4df51c907b06239153b3c123510c833add9"
 
-RDEPENDS_${PN} = "rpi-config"
+RDEPENDS:${PN} = "rpi-config"
 
 COMPATIBLE_MACHINE = "^rpi$"
 

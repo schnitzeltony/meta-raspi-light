@@ -239,11 +239,11 @@ KERNEL_DEVICETREE = " \
 "
 
 # special overlay
-KERNEL_DEVICETREE_append = " \
+KERNEL_DEVICETREE:append = " \
     overlays/overlay_map.dtb \
 "
 
-KERNEL_DEVICETREE_append_arm = " \
+KERNEL_DEVICETREE:append:arm = " \
     bcm2708-rpi-b.dtb \
     bcm2708-rpi-b-plus.dtb \
     bcm2708-rpi-b-rev1.dtb \
@@ -273,7 +273,7 @@ KERNEL_DEVICETREE_append_arm = " \
     bcm2837-rpi-cm3-io3.dtb \
 "
 
-KERNEL_DEVICETREE_append_aarch64 = " \
+KERNEL_DEVICETREE:append:aarch64 = " \
     broadcom/bcm2710-rpi-2-b.dtb \
     broadcom/bcm2710-rpi-3-b.dtb \
     broadcom/bcm2710-rpi-3-b-plus.dtb \
@@ -303,4 +303,4 @@ IMAGE_BOOT_FILES ?= "bcm2835-bootfiles/* ${KERNEL_IMAGETYPE};${SDIMG_KERNELIMAGE
 
 # The kernel image is installed into the FAT32 boot partition and does not need
 # to also be installed into the rootfs.
-RDEPENDS_${KERNEL_PACKAGE_NAME}-base = ""
+RDEPENDS:${KERNEL_PACKAGE_NAME}-base = ""

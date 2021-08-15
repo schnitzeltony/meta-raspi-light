@@ -11,16 +11,16 @@ PV = "${LINUX_VERSION}+git${SRCPV}"
 
 KCONFIG_MODE = "--alldefconfig"
 # We pull in the default config from the RPi kernel GIT tree.
-KBUILD_DEFCONFIG_raspberrypi0-wifi ?= "bcmrpi_defconfig"
-KBUILD_DEFCONFIG_raspberrypi ?= "bcmrpi_defconfig"
-KBUILD_DEFCONFIG_raspberrypi-cm3 ?= "bcm2709_defconfig"
-KBUILD_DEFCONFIG_raspberrypi2 ?= "bcm2709_defconfig"
-KBUILD_DEFCONFIG_raspberrypi2-a9 ?= "bcm2709_defconfig"
-KBUILD_DEFCONFIG_raspberrypi3 ?= "bcm2709_defconfig"
-KBUILD_DEFCONFIG_raspberrypi3-a9 ?= "bcm2709_defconfig"
-KBUILD_DEFCONFIG_raspberrypi3-64 ?= "bcmrpi3_defconfig"
-KBUILD_DEFCONFIG_raspberrypi4 ?= "bcm2711_defconfig"
-KBUILD_DEFCONFIG_raspberrypi4-64 ?= "bcm2711_defconfig"
+KBUILD_DEFCONFIG:raspberrypi0-wifi ?= "bcmrpi_defconfig"
+KBUILD_DEFCONFIG:raspberrypi ?= "bcmrpi_defconfig"
+KBUILD_DEFCONFIG:raspberrypi-cm3 ?= "bcm2709_defconfig"
+KBUILD_DEFCONFIG:raspberrypi2 ?= "bcm2709_defconfig"
+KBUILD_DEFCONFIG:raspberrypi2-a9 ?= "bcm2709_defconfig"
+KBUILD_DEFCONFIG:raspberrypi3 ?= "bcm2709_defconfig"
+KBUILD_DEFCONFIG:raspberrypi3-a9 ?= "bcm2709_defconfig"
+KBUILD_DEFCONFIG:raspberrypi3-64 ?= "bcmrpi3_defconfig"
+KBUILD_DEFCONFIG:raspberrypi4 ?= "bcm2711_defconfig"
+KBUILD_DEFCONFIG:raspberrypi4-64 ?= "bcm2711_defconfig"
 
 # serial - necessary for early kernel problems (requires adapter)
 #CONSOLE="serial0,115200"
@@ -32,16 +32,16 @@ CONSOLE="tty1"
 CMDLINE = "dwc_otg.lpm_enable=0 console=${CONSOLE} root=/dev/mmcblk0p2 rootfstype=ext4 rootwait"
 
 # Add the kernel debugger over console kernel command line option if enabled
-CMDLINE_append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
+CMDLINE:append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
 
 # Set the verbosity of kernel messages during runtime
 # shut up
-#CMDLINE_append = " quiet"
+#CMDLINE:append = " quiet"
 # verbose
-#CMDLINE_append = " debug"
+#CMDLINE:append = " debug"
 
 # Avoid screen auto switch off
-CMDLINE_append = " consoleblank=0"
+CMDLINE:append = " consoleblank=0"
 
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
 
@@ -59,7 +59,7 @@ kernel_configure_variable() {
     fi
 }
 
-do_configure_prepend() {
+do_configure:prepend() {
     # Clean .config
     echo "" > ${B}/.config
     CONF_SED_SCRIPT=""
@@ -127,14 +127,14 @@ do_configure_prepend() {
     yes '' | oe_runmake oldconfig
 }
 
-do_compile_append() {
+do_compile:append() {
     if [ "${SITEINFO_BITS}" = "64" ]; then
         cc_extra=$(get_cc_option)
         oe_runmake dtbs CC="${KERNEL_CC} $cc_extra " LD="${KERNEL_LD}" ${KERNEL_EXTRA_ARGS}
     fi
 }
 
-do_deploy_append() {
+do_deploy:append() {
     # Modify cmdline.txt
     install -d ${DEPLOYDIR}/bcm2835-bootfiles
     PITFT="${@bb.utils.contains("MACHINE_FEATURES", "pitft", "1", "0", d)}"
