@@ -12,19 +12,13 @@ PR = "r5"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-inherit deploy siteinfo nopackages
+inherit deploy nopackages
 
 do_deploy() {
     install -d ${DEPLOYDIR}/bcm2835-bootfiles
     cp ${WORKDIR}/config.txt ${DEPLOYDIR}/bcm2835-bootfiles/
 
     conf_file='${DEPLOYDIR}/bcm2835-bootfiles/config.txt'
-
-    if [ "${SITEINFO_BITS}" = "64" ]; then
-        echo '# Force 64 bit - see: https://github.com/raspberrypi/firmware/issues/1193' >> "$conf_file"
-        echo 'arm_64bit=1' >> "$conf_file"
-        echo >> "$conf_file"
-    fi
 
     cat >> "$conf_file" <<EOF
 [pi4]
