@@ -12,7 +12,7 @@ RT_PATCHES = " \
 
 SRCREV = "bad3872df40dd9a4ba7ff239c17288a7a84a80f9"
 SRC_URI = " \
-    git://github.com/raspberrypi/linux.git;branch=rpi-5.10.y \
+    git://github.com/raspberrypi/linux.git;branch=rpi-5.10.y;protocol=https \
     file://0001-menuconfig-mconf-cfg-Allow-specification-of-ncurses-.patch \
     file://0002-Allow-linking-with-gold-for-build-tests.patch \
     ${@oe.utils.conditional("ENABLE_RPI_RT", "1", "${RT_PATCHES}", "", d)} \
