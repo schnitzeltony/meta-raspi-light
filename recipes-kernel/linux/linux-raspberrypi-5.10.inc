@@ -22,27 +22,6 @@ KBUILD_DEFCONFIG:raspberrypi3-64 ?= "bcmrpi3_defconfig"
 KBUILD_DEFCONFIG:raspberrypi4 ?= "bcm2711_defconfig"
 KBUILD_DEFCONFIG:raspberrypi4-64 ?= "bcm2711_defconfig"
 
-# serial - necessary for early kernel problems (requires adapter)
-#CONSOLE="serial0,115200"
-# screen
-CONSOLE="tty1"
-
-# CMDLINE for raspberrypi
-
-CMDLINE = "dwc_otg.lpm_enable=0 console=${CONSOLE} root=/dev/mmcblk0p2 rootfstype=ext4 rootwait"
-
-# Add the kernel debugger over console kernel command line option if enabled
-CMDLINE:append = ' ${@oe.utils.conditional("ENABLE_KGDB", "1", "kgdboc=serial0,115200", "", d)}'
-
-# Set the verbosity of kernel messages during runtime
-# shut up
-#CMDLINE:append = " quiet"
-# verbose
-#CMDLINE:append = " debug"
-
-# Avoid screen auto switch off
-CMDLINE:append = " consoleblank=0"
-
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
 
 # Set a variable in .configure
@@ -128,15 +107,7 @@ do_configure:prepend() {
 }
 
 do_deploy:append() {
-    # Modify cmdline.txt
-    install -d ${DEPLOYDIR}/bcm2835-bootfiles
-    PITFT="${@bb.utils.contains("MACHINE_FEATURES", "pitft", "1", "0", d)}"
-    if [ ${PITFT} = "1" ]; then
-        PITFT_PARAMS="fbcon=map:10 fbcon=font:VGA8x8"
-    fi
-    echo "${CMDLINE}${PITFT_PARAMS}" > ${DEPLOYDIR}/bcm2835-bootfiles/cmdline.txt
-
-    # deploy kernel images with version for card-kernel-wtite.sh
+    # deploy kernel images with version for card-kernel-write.sh
     for type in ${KERNEL_IMAGETYPES} ; do
         cp ${KERNEL_OUTPUT_DIR}/${type} ${DEPLOYDIR}/${type}-${KERNEL_VERSION}
     done
