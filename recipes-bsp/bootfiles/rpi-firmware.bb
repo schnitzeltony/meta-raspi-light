@@ -12,7 +12,7 @@ PV = "20211007"
 SRC_URI = "https://github.com/raspberrypi/firmware/archive/1.${PV}.tar.gz"
 SRC_URI[sha256sum] = "1afa2ed736ac08c75768847a71d6558e329bdade14db4da9c71fcff8977d26cd"
 
-RDEPENDS:${PN} = "rpi-config"
+RDEPENDS:${PN} = "rpi-config rpi-cmdline"
 
 COMPATIBLE_MACHINE = "^rpi$"
 
@@ -20,26 +20,23 @@ COMPATIBLE_MACHINE = "^rpi$"
 S = "${WORKDIR}/firmware-1.${PV}/boot"
 
 do_deploy() {
-    install -d ${DEPLOYDIR}/${PN}
+    install -d ${DEPLOYDIR}/bootfiles
 
     for i in ${S}/*.elf ; do
-        cp $i ${DEPLOYDIR}/${PN}
+        cp $i ${DEPLOYDIR}/bootfiles
     done
     for i in ${S}/*.dat ; do
-        cp $i ${DEPLOYDIR}/${PN}
+        cp $i ${DEPLOYDIR}/bootfiles
     done
     for i in ${S}/*.bin ; do
-        cp $i ${DEPLOYDIR}/${PN}
+        cp $i ${DEPLOYDIR}/bootfiles
     done
-
-    # Add stamp in deploy directory
-    touch ${DEPLOYDIR}/${PN}/${PN}-${PV}.stamp
 }
 
 do_deploy[depends] += "rpi-config:do_deploy"
 
 addtask deploy before do_build after do_install
-do_deploy[dirs] += "${DEPLOYDIR}/${PN}"
+do_deploy[dirs] += "${DEPLOYDIR}/bootfiles"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

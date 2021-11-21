@@ -26,7 +26,7 @@ inherit image_types
 IMAGE_TYPEDEP:rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
 
 # Set kernel and boot loader
-IMAGE_BOOTLOADER ?= "bcm2835-bootfiles"
+IMAGE_BOOTLOADER ?= "rpi-firmware"
 
 # Boot partition volume id
 BOOTDD_VOLUME_ID ?= "${MACHINE}"
@@ -114,7 +114,7 @@ IMAGE_CMD:rpi-sdimg () {
     # maximum length allowed 11 chars
     VOLUME_ID_SHORT=`echo "${BOOTDD_VOLUME_ID}" | sed 's:raspberrypi:rpi:'`
     mkfs.vfat -F32 -n "$VOLUME_ID_SHORT" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
-    mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles/* ::/
+    mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bootfiles/* ::/
     if test -n "${DTS}"; then
         # Copy board device trees to root folder
         for dtbf in ${@split_overlays(d, True)}; do
