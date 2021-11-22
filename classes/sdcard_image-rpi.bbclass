@@ -119,14 +119,16 @@ IMAGE_CMD:rpi-sdimg () {
         # Copy board device trees to root folder
         for dtbf in ${@split_overlays(d, True)}; do
             dtb=`basename $dtbf`
-            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::$dtb
+            echo "Copy board devicetree ${DEPLOY_DIR_IMAGE}/$dtb into boot.img"
+            mcopy -v -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::$dtb
         done
 
         # Copy device tree overlays to dedicated folder
         mmd -i ${WORKDIR}/boot.img overlays
         for dtbf in ${@split_overlays(d, False)}; do
             dtb=`basename $dtbf`
-            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::overlays/$dtb
+            echo "Copy devicetree-overlay ${DEPLOY_DIR_IMAGE}/$dtb into boot.img"
+            mcopy -v -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::overlays/$dtb
         done
     fi
     if [ ! -z "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" = "1" ]; then
