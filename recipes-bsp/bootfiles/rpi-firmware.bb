@@ -7,10 +7,10 @@ inherit deploy nopackages
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-PV = "20211029"
+PV = "20211118"
 
 SRC_URI = "https://github.com/raspberrypi/firmware/archive/1.${PV}.tar.gz"
-SRC_URI[sha256sum] = "22d0d5d2df73263bd0e6bdcd31c7e0d97ea6c438834e2cfaa51cb958f20b7205"
+SRC_URI[sha256sum] = "0a2d395f454fc0b4e1c639db57258abb53ca0d9ecd596bd8c836f2a50d6a49f3"
 
 DEPENDS = "rpi-config rpi-cmdline"
 
