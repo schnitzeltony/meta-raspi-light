@@ -12,8 +12,8 @@ CMDLINE_DWC_OTG ?= ""
 #CMDLINE_ROOTFS ?= ""
 CMDLINE_ROOTFS ?= "root=/dev/mmcblk0p2 rootfstype=ext4 rootwait"
 
-CMDLINE_SERIAL ?= ""
-#CMDLINE_SERIAL ?= "console=serial0,115200"
+#CMDLINE_SERIAL ?= ""
+CMDLINE_SERIAL ?= "console=serial0,115200"
 
 #CMDLINE_LOG_SCREEN ?= ""
 CMDLINE_LOG_SCREEN ?= "console=tty1"
