@@ -96,8 +96,27 @@ do_configure:prepend() {
 }
 
 do_deploy:append() {
-    # deploy kernel images with version for card-kernel-write.sh
+    # deploy kernel images with version for meta-mortsgna's card-kernel-write.sh
     for type in ${KERNEL_IMAGETYPES} ; do
         cp ${KERNEL_OUTPUT_DIR}/${type} ${DEPLOYDIR}/${type}-${KERNEL_VERSION}
+    done
+
+    # rework layout to what raspios does
+	install -d $deployDir/overlays
+	install -d $deployDir/bootfiles
+    for dtbf in ${KERNEL_DEVICETREE}; do
+        dtb=`normalize_dtb "$dtbf"`
+        dtb_ext=${dtb##*.}
+        dtb_base_name=`basename $dtb .$dtb_ext`
+
+        # remove dtb symlinks
+        rm $deployDir/$dtb_base_name.$dtb_ext
+        rm $deployDir/$dtb_base_name-${KERNEL_DTB_LINK_NAME}.$dtb_ext
+
+        if [ "$dtb_ext" = "dtbo" -o $dtb_base_name.$dtb_ext = 'overlay_map.dtb' ]; then
+            mv $deployDir/$dtb_base_name-${KERNEL_DTB_NAME}.$dtb_ext $deployDir/overlays/$dtb_base_name.$dtb_ext
+        else
+            mv $deployDir/$dtb_base_name-${KERNEL_DTB_NAME}.$dtb_ext $deployDir/bootfiles/$dtb_base_name.$dtb_ext
+        fi
     done
 }

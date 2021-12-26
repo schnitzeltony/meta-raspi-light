@@ -115,22 +115,9 @@ IMAGE_CMD:rpi-sdimg () {
     VOLUME_ID_SHORT=`echo "${BOOTDD_VOLUME_ID}" | sed 's:raspberrypi:rpi:'`
     mkfs.vfat -F32 -n "$VOLUME_ID_SHORT" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bootfiles/* ::/
-    if test -n "${DTS}"; then
-        # Copy board device trees to root folder
-        for dtbf in ${@split_overlays(d, True)}; do
-            dtb=`basename $dtbf`
-            echo "Copy board devicetree ${DEPLOY_DIR_IMAGE}/$dtb into boot.img"
-            mcopy -v -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::$dtb
-        done
+    mmd -i ${WORKDIR}/boot.img overlays
+    mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/overlays/* ::/overlays
 
-        # Copy device tree overlays to dedicated folder
-        mmd -i ${WORKDIR}/boot.img overlays
-        for dtbf in ${@split_overlays(d, False)}; do
-            dtb=`basename $dtbf`
-            echo "Copy devicetree-overlay ${DEPLOY_DIR_IMAGE}/$dtb into boot.img"
-            mcopy -v -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$dtb ::overlays/$dtb
-        done
-    fi
     if [ ! -z "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" = "1" ]; then
         mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${INITRAMFS_SYMLINK_NAME}.bin ::${SDIMG_KERNELIMAGE}
     else
