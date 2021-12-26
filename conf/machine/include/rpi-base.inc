@@ -324,8 +324,6 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
 
-IMAGE_BOOT_FILES ?= "bootfiles/* ${KERNEL_IMAGETYPE};${SDIMG_KERNELIMAGE}"
-
 # The kernel image is installed into the FAT32 boot partition and does not need
 # to also be installed into the rootfs.
 RDEPENDS:${KERNEL_PACKAGE_NAME}-base = ""
