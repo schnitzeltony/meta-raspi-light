@@ -279,9 +279,12 @@ KERNEL_DEVICETREE:append:arm = " \
     bcm2710-rpi-3-b.dtb \
     bcm2710-rpi-3-b-plus.dtb \
     bcm2710-rpi-cm3.dtb \
-    bcm2711-rpi-400.dtb \
+    bcm2710-rpi-zero-2.dts \
+    bcm2710-rpi-zero-2-w.dts \
     bcm2711-rpi-4-b.dtb \
+    bcm2711-rpi-400.dtb \
     bcm2711-rpi-cm4.dtb \
+    bcm2711-rpi-cm4s.dtb \
     bcm2835-rpi-a.dtb \
     bcm2835-rpi-a-plus.dtb \
     bcm2835-rpi-b.dtb \
@@ -302,6 +305,7 @@ KERNEL_DEVICETREE:append:aarch64 = " \
     broadcom/bcm2710-rpi-3-b.dtb \
     broadcom/bcm2710-rpi-3-b-plus.dtb \
     broadcom/bcm2710-rpi-cm3.dtb \
+    broadcom/bcm2710-rpi-zero-2.dtb \
     broadcom/bcm2711-rpi-4-b.dtb \
     broadcom/bcm2711-rpi-400.dtb \
     broadcom/bcm2711-rpi-cm4.dtb \
