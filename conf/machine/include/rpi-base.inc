@@ -324,9 +324,6 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
 
-# Set Raspberrypi splash image
-SPLASH = "psplash-raspberrypi"
-
 IMAGE_BOOT_FILES ?= "bootfiles/* ${KERNEL_IMAGETYPE};${SDIMG_KERNELIMAGE}"
 
 # The kernel image is installed into the FAT32 boot partition and does not need
