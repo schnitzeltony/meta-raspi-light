@@ -59,17 +59,6 @@ do_configure:prepend() {
         kernel_configure_variable UBIFS_FS y
     fi
 
-    # Activate the configuration options for VC4
-    kernel_configure_variable I2C_BCM2835 y
-    kernel_configure_variable DRM y
-    kernel_configure_variable DRM_FBDEV_EMULATION y
-    kernel_configure_variable DRM_VC4 y
-    kernel_configure_variable FB_BCM2708 n
-
-    # Activate onboard sound by default
-    kernel_configure_variable SND y
-    # kernel_configure_variable SND_BCM2835 y
-
     # 500Hz timers
     kernel_configure_variable HZ_500 y
     kernel_configure_variable HZ 500
