@@ -29,7 +29,9 @@ IMAGE_TYPEDEP:rpi-sdimg = "${SDIMG_ROOTFS_TYPE}"
 IMAGE_BOOTLOADER ?= "rpi-firmware"
 
 # Boot partition volume id
-BOOTDD_VOLUME_ID ?= "${MACHINE}"
+# Shorten raspberrypi to just rpi to keep it under 11 characters
+# now enforced by mkfs.vfat from dosfstools-4.2
+BOOTDD_VOLUME_ID ?= "${@d.getVar('MACHINE').replace('raspberrypi', 'rpi')}"
 
 # Boot partition size [in KiB] (will be rounded up to IMAGE_ROOTFS_ALIGNMENT)
 BOOT_SPACE ?= "80920"
@@ -99,9 +101,7 @@ IMAGE_CMD:rpi-sdimg () {
     # Create a vfat image with boot files
     BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
     rm -f ${WORKDIR}/boot.img
-    # maximum length allowed 11 chars
-    VOLUME_ID_SHORT=`echo "${BOOTDD_VOLUME_ID}" | sed 's:raspberrypi:rpi:'`
-    mkfs.vfat -F32 -n "$VOLUME_ID_SHORT" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
+    mkfs.vfat -F32 -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bootfiles/* ::/
     mmd -i ${WORKDIR}/boot.img overlays
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/overlays/* ::/overlays
