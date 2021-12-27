@@ -72,18 +72,6 @@ FATPAYLOAD ?= ""
 SDIMG_VFAT = "${IMAGE_NAME}.vfat"
 SDIMG_LINK_VFAT = "${IMGDEPLOYDIR}/${IMAGE_LINK_NAME}.vfat"
 
-def split_overlays(d, out, ver=None):
-    dts = d.getVar("KERNEL_DEVICETREE")
-    # Device Tree Overlays are assumed to be suffixed by '-overlay.dtb' (4.1.x) or by '.dtbo' (4.4.9+) string and will be put in a dedicated folder
-    if out:
-        overlays = oe.utils.str_filter_out('\S+\-overlay\.dtb$', dts, d)
-        overlays = oe.utils.str_filter_out('\S+\.dtbo$', overlays, d)
-    else:
-        overlays = oe.utils.str_filter('\S+\-overlay\.dtb$', dts, d) + \
-                   " " + oe.utils.str_filter('\S+\.dtbo$', dts, d)
-
-    return overlays
-
 IMAGE_CMD:rpi-sdimg () {
 
     # Align partitions
@@ -141,19 +129,6 @@ IMAGE_CMD:rpi-sdimg () {
     else
         dd if=${SDIMG_ROOTFS} of=${SDIMG} conv=notrunc seek=1 bs=$(expr 1024 \* ${BOOT_SPACE_ALIGNED} + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)
     fi
-
-    # Optionally apply compression
-    case "${SDIMG_COMPRESSION}" in
-    "gzip")
-        gzip -k9 "${SDIMG}"
-        ;;
-    "bzip2")
-        bzip2 -k9 "${SDIMG}"
-        ;;
-    "xz")
-        xz -k "${SDIMG}"
-        ;;
-    esac
 }
 
 ROOTFS_POSTPROCESS_COMMAND += " rpi_generate_sysctl_config ; "
