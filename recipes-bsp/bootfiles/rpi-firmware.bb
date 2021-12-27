@@ -31,6 +31,9 @@ do_deploy() {
     for i in ${S}/*.bin ; do
         cp $i ${DEPLOYDIR}/bootfiles
     done
+
+    install -d ${DEPLOYDIR}/overlays
+    cp ${S}/overlays/README ${DEPLOYDIR}/overlays
 }
 
 do_deploy[depends] += "rpi-config:do_deploy"
