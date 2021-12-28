@@ -17,6 +17,10 @@ inherit deploy nopackages
 do_deploy() {
     install -d ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
     cp ${WORKDIR}/config.txt ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
+
+    if grep -q -E '^.{80}.$' ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}/config.txt; then
+        bbwarn "config.txt contains lines longer than 80 characters, this is not supported"
+    fi
 }
 
 addtask deploy before do_package after do_install
