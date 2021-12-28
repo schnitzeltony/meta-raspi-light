@@ -16,7 +16,6 @@ DEPENDS = "rpi-config rpi-cmdline"
 
 COMPATIBLE_MACHINE = "^rpi$"
 
-#S = "${WORKDIR}/firmware-schnitzel-${PV}/boot"
 S = "${WORKDIR}/firmware-1.${PV}/boot"
 
 do_deploy() {
@@ -36,7 +35,7 @@ do_deploy() {
     cp ${S}/${OVERLAYS_DIR_NAME}/README ${DEPLOYDIR}/${OVERLAYS_DIR_NAME}
 }
 
-do_deploy[depends] += "rpi-config:do_deploy"
+do_deploy[depends] += "rpi-config:do_deploy rpi-cmdline:do_deploy"
 
 addtask deploy before do_build after do_install
 do_deploy[dirs] += "${DEPLOYDIR}/${BOOTFILES_DIR_NAME} ${DEPLOYDIR}/${OVERLAYS_DIR_NAME}"
