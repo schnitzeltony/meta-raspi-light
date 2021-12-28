@@ -27,8 +27,8 @@ LINUX_VERSION_EXTENSION ?= ""
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
 
 SRC_URI += " \
-    ${@bb.utils.contains("INITRAMFS_IMAGE_BUNDLE", "1", "file://initramfs-image-bundle.cfg", "", d)} \
     file://vc4graphics.cfg \
+    ${@bb.utils.contains("INITRAMFS_IMAGE_BUNDLE", "1", "file://initramfs-image-bundle.cfg", "", d)} \
     ${@oe.utils.conditional("ENABLE_RPI_RT", "1", "file://rt.cfg", "", d)} \
     "
 
