@@ -5,10 +5,8 @@ include conf/machine/include/rpi-default-providers.inc
 SOC_FAMILY = "rpi"
 include conf/machine/include/soc-family.inc
 
-IMAGE_FSTYPES ?= "ext4 rpi-sdimg"
-
-BOOTFILES_DIR_NAME ?= "bootfiles"
-OVERLAYS_DIR_NAME ?= "overlays"
+IMAGE_FSTYPES ?= "wic wic.bmap"
+WKS_FILE ?= "sdimage-raspberrypi.wks"
 
 XSERVER = " \
     xserver-xorg \
@@ -325,8 +323,26 @@ MACHINE_FEATURES += "apm usbhost keyboard vfat ext2 screen touchscreen alsa blue
 # Raspberry Pi has no hardware clock
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
+MACHINE_EXTRA_RRECOMMENDS += "kernel-modules"
 MACHINE_EXTRA_RRECOMMENDS += "udev-rules-rpi udev-rules-udisks-rpi udev-rules-rpi-gpio udev-rules-rpi-i2c"
+
+SERIAL_CONSOLES_CHECK ??= "${SERIAL_CONSOLES}"
+
+# The name of the deploy directory for raspberry pi boot files.
+# This variable is referred to by recipes fetching / generating the files.
+BOOTFILES_DIR_NAME ?= "bootfiles"
+OVERLAYS_DIR_NAME ?= "overlays"
+
+IMAGE_BOOT_FILES ?= " \
+    ${BOOTFILES_DIR_NAME}/* \
+    ${OVERLAYS_DIR_NAME}/*;${OVERLAYS_DIR_NAME}/ \
+    ${KERNEL_IMAGETYPE};${SDIMG_KERNELIMAGE} \
+"
+do_image_wic[depends] += " \
+    rpi-firmware:do_deploy \
+"
+
+do_image_wic[recrdeps] = "do_build"
 
 # The kernel image is installed into the FAT32 boot partition and does not need
 # to also be installed into the rootfs.
