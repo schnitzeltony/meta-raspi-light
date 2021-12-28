@@ -1,25 +1,6 @@
-SUBSYSTEM=="input", GROUP="input", MODE="0660"
-SUBSYSTEM=="rpivid-*", GROUP="video", MODE="0660"
-
-KERNEL=="vcsm-cma", GROUP="video", MODE="0660"
-SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
-
-KERNEL=="ttyAMA0", PROGRAM="/bin/sh -c '\
+KERNEL=="ttyAMA[01]", PROGRAM="/bin/sh -c '\
 	ALIASES=/proc/device-tree/aliases; \
 	if cmp -s $$ALIASES/uart0 $$ALIASES/serial0; then \
-		echo 0;\
-	elif cmp -s $$ALIASES/uart0 $$ALIASES/serial1; then \
-		echo 1; \
-	else \
-		exit 1; \
-	fi\
-'", SYMLINK+="serial%c"
-
-KERNEL=="ttyAMA1", PROGRAM="/bin/sh -c '\
-	ALIASES=/proc/device-tree/aliases; \
-	if [ -e /dev/ttyAMA0 ]; then \
-		exit 1; \
-	elif cmp -s $$ALIASES/uart0 $$ALIASES/serial0; then \
 		echo 0;\
 	elif cmp -s $$ALIASES/uart0 $$ALIASES/serial1; then \
 		echo 1; \
@@ -38,9 +19,3 @@ KERNEL=="ttyS0", PROGRAM="/bin/sh -c '\
 		exit 1; \
 	fi \
 '", SYMLINK+="serial%c"
-
-ACTION=="add", SUBSYSTEM=="vtconsole", KERNEL=="vtcon1", RUN+="/bin/sh -c '\
-	if echo RPi-Sense FB | cmp -s /sys/class/graphics/fb0/name; then \
-		echo 0 > /sys$devpath/bind; \
-	fi; \
-'"
