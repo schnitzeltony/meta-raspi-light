@@ -26,6 +26,8 @@ LINUX_VERSION_EXTENSION ?= ""
 
 KERNEL_MODULE_AUTOLOAD += "${@bb.utils.contains("MACHINE_FEATURES", "pitft28r", "stmpe-ts", "", d)}"
 
+KERNEL_DTC_FLAGS += "-@ -H epapr"
+
 SRC_URI += " \
     file://vc4graphics.cfg \
     ${@bb.utils.contains("INITRAMFS_IMAGE_BUNDLE", "1", "file://initramfs-image-bundle.cfg", "", d)} \
