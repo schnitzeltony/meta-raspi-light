@@ -38,8 +38,8 @@ do_deploy:append() {
     done
 
     # rework layout to what raspios does
-	install -d $deployDir/overlays
-	install -d $deployDir/bootfiles
+	install -d $deployDir/${OVERLAYS_DIR_NAME}
+	install -d $deployDir/${BOOTFILES_DIR_NAME}
     for dtbf in ${KERNEL_DEVICETREE}; do
         dtb=`normalize_dtb "$dtbf"`
         dtb_ext=${dtb##*.}
@@ -50,9 +50,9 @@ do_deploy:append() {
         rm $deployDir/$dtb_base_name-${KERNEL_DTB_LINK_NAME}.$dtb_ext
 
         if [ "$dtb_ext" = "dtbo" -o $dtb_base_name.$dtb_ext = 'overlay_map.dtb' ]; then
-            mv $deployDir/$dtb_base_name-${KERNEL_DTB_NAME}.$dtb_ext $deployDir/overlays/$dtb_base_name.$dtb_ext
+            mv $deployDir/$dtb_base_name-${KERNEL_DTB_NAME}.$dtb_ext $deployDir/${OVERLAYS_DIR_NAME}/$dtb_base_name.$dtb_ext
         else
-            mv $deployDir/$dtb_base_name-${KERNEL_DTB_NAME}.$dtb_ext $deployDir/bootfiles/$dtb_base_name.$dtb_ext
+            mv $deployDir/$dtb_base_name-${KERNEL_DTB_NAME}.$dtb_ext $deployDir/${BOOTFILES_DIR_NAME}/$dtb_base_name.$dtb_ext
         fi
     done
 }

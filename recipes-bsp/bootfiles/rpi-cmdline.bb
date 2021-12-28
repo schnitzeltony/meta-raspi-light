@@ -72,11 +72,11 @@ do_compile() {
 }
 
 do_deploy() {
-    install -d "${DEPLOYDIR}/bootfiles"
-    install -m 0644 "${WORKDIR}/cmdline.txt" "${DEPLOYDIR}/bootfiles"
+    install -d "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
+    install -m 0644 "${WORKDIR}/cmdline.txt" "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
 }
 
 addtask deploy before do_build after do_install
-do_deploy[dirs] += "${DEPLOYDIR}/bootfiles"
+do_deploy[dirs] += "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

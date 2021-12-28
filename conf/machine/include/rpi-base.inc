@@ -7,6 +7,9 @@ include conf/machine/include/soc-family.inc
 
 IMAGE_FSTYPES ?= "ext4 rpi-sdimg"
 
+BOOTFILES_DIR_NAME ?= "bootfiles"
+OVERLAYS_DIR_NAME ?= "overlays"
+
 XSERVER = " \
     xserver-xorg \
     xserver-xorg-extension-glx \

@@ -15,11 +15,11 @@ INHIBIT_DEFAULT_DEPS = "1"
 inherit deploy nopackages
 
 do_deploy() {
-    install -d ${DEPLOYDIR}
-    cp ${WORKDIR}/config.txt ${DEPLOYDIR}/bootfiles
+    install -d ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
+    cp ${WORKDIR}/config.txt ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
 }
 
 addtask deploy before do_package after do_install
-do_deploy[dirs] += "${DEPLOYDIR}/bootfiles"
+do_deploy[dirs] += "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

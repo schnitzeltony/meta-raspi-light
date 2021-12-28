@@ -20,26 +20,26 @@ COMPATIBLE_MACHINE = "^rpi$"
 S = "${WORKDIR}/firmware-1.${PV}/boot"
 
 do_deploy() {
-    install -d ${DEPLOYDIR}/bootfiles
+    install -d ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
 
     for i in ${S}/*.elf ; do
-        cp $i ${DEPLOYDIR}/bootfiles
+        cp $i ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
     done
     for i in ${S}/*.dat ; do
-        cp $i ${DEPLOYDIR}/bootfiles
+        cp $i ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
     done
     for i in ${S}/*.bin ; do
-        cp $i ${DEPLOYDIR}/bootfiles
+        cp $i ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}
     done
 
-    install -d ${DEPLOYDIR}/overlays
-    cp ${S}/overlays/README ${DEPLOYDIR}/overlays
+    install -d ${DEPLOYDIR}/${OVERLAYS_DIR_NAME}
+    cp ${S}/${OVERLAYS_DIR_NAME}/README ${DEPLOYDIR}/${OVERLAYS_DIR_NAME}
 }
 
 do_deploy[depends] += "rpi-config:do_deploy"
 
 addtask deploy before do_build after do_install
-do_deploy[dirs] += "${DEPLOYDIR}/bootfiles"
+do_deploy[dirs] += "${DEPLOYDIR}/${BOOTFILES_DIR_NAME} ${DEPLOYDIR}/${OVERLAYS_DIR_NAME}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
