@@ -48,7 +48,6 @@ KERNEL_DEVICETREE = " \
     overlays/cap1106.dtbo \
     overlays/chipdip-dac.dtbo \
     overlays/cma.dtbo \
-    overlays/cutiepi-panel.dtbo \
     overlays/dht11.dtbo \
     overlays/dionaudio-loco.dtbo \
     overlays/dionaudio-loco-v2.dtbo \

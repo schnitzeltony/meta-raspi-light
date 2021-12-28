@@ -2,7 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
-LINUX_VERSION ?= "5.10.88"
+LINUX_VERSION ?= "5.10.83"
 
 RT_PATCHES = " \
 	file://rt/patch-5.10.87-rt59.patch \
@@ -10,7 +10,7 @@ RT_PATCHES = " \
 	file://rt/0002-usb-dwc_otg-fix-system-lockup-when-interrupts-are-th.patch \
 "
 
-SRCREV = "606d1fc3bc97a8be1d21e143ca88f3ba085ddef1"
+SRCREV = "111a297d94e361de88d04b574acbca1bd5858cdb"
 SRC_URI = " \
     git://github.com/raspberrypi/linux.git;branch=rpi-5.10.y;protocol=https \
     file://0001-menuconfig-mconf-cfg-Allow-specification-of-ncurses-.patch \
