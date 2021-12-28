@@ -326,6 +326,7 @@ MACHINE_FEATURES += "apm usbhost keyboard vfat ext2 screen touchscreen alsa blue
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
+MACHINE_EXTRA_RRECOMMENDS += "udev-rules-rpi udev-rules-udisks-rpi udev-rules-rpi-gpio udev-rules-rpi-i2c"
 
 # The kernel image is installed into the FAT32 boot partition and does not need
 # to also be installed into the rootfs.
